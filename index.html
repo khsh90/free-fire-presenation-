@@ -1,0 +1,1163 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0a0a0d">
+<title>Free Fire | عرض تفاعلي</title>
+<meta name="description" content="عرض تقديمي تفاعلي عن لعبة Free Fire — إعداد الطالب خالد قتيبة أحمد خشاشنة، الصف العاشر (ب)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;500;600;700;800&family=Lalezar&family=Russo+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fire:#ff5a00; --amber:#ffa31a; --gold:#ffd400; --red:#ff2d3a; --ice:#5ad1ff;
+  --ink:#08080b; --ink2:#121016; --panel:rgba(22,17,15,.78); --line:rgba(255,163,26,.32);
+  --txt:#fff5e8; --muted:#cdb9a3; --dim:#8d7b6a;
+  --display:'Lalezar','Changa',sans-serif; --body:'Changa',system-ui,sans-serif; --latin:'Russo One','Changa',sans-serif;
+  --mx:0; --my:0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--ink);color:var(--txt);font-family:var(--body);overflow:hidden;-webkit-tap-highlight-color:transparent}
+body{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23ffa31a' stroke-width='2'/%3E%3Cpath d='M16 2v8M16 22v8M2 16h8M22 16h8' stroke='%23ffa31a' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%23ff2d3a'/%3E%3C/svg%3E") 16 16,crosshair}
+button{font-family:inherit;color:inherit;cursor:inherit;border:0;background:none}
+a{color:inherit}
+img{display:block;max-width:100%}
+.latin{font-family:var(--latin);direction:ltr;unicode-bidi:isolate;letter-spacing:.02em}
+
+/* ---------- global background ---------- */
+#fx{position:fixed;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen}
+.bg{position:fixed;inset:0;z-index:0;background:
+  radial-gradient(1200px 700px at 15% 110%,rgba(255,90,0,.28),transparent 60%),
+  radial-gradient(900px 600px at 95% -10%,rgba(255,45,58,.18),transparent 60%),
+  linear-gradient(180deg,#0d0a0c,#08080b 60%,#140b06)}
+.bg::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,163,26,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,163,26,.05) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse at center,#000 30%,transparent 80%)}
+.vignette{position:fixed;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.75))}
+
+/* ---------- SPLASH ---------- */
+#splash{position:fixed;inset:0;z-index:100;display:grid;place-items:center;overflow:hidden;background:#050407}
+#splash .sp-bg{position:absolute;inset:-40px;background:
+  linear-gradient(180deg,rgba(5,4,7,.55),rgba(5,4,7,.92)),
+  url("https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/20269/6b0b45e2727f6314d49d4d50a9028c8f.jpg") center/cover,
+  radial-gradient(circle at 50% 70%,#3a1300,#050407 70%);
+  filter:blur(3px) saturate(1.3);transform:scale(1.08);animation:spZoom 14s ease-in-out infinite alternate}
+@keyframes spZoom{to{transform:scale(1.18) translateY(-12px)}}
+#spfx{position:absolute;inset:0;mix-blend-mode:screen}
+.sp-scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px);pointer-events:none}
+.sp-beam{position:absolute;width:160vmax;height:2px;background:linear-gradient(90deg,transparent,var(--amber),transparent);top:50%;left:50%;transform-origin:center;opacity:.5;animation:beam 6s linear infinite}
+.sp-beam.b2{animation-duration:9s;animation-direction:reverse;opacity:.3;background:linear-gradient(90deg,transparent,var(--red),transparent)}
+@keyframes beam{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+.sp-inner{position:relative;z-index:3;text-align:center;padding:24px;width:min(760px,100%)}
+.sp-badge{display:inline-flex;gap:10px;align-items:center;font-weight:700;font-size:14px;letter-spacing:.04em;color:var(--gold);padding:7px 18px;border:1px solid rgba(255,212,0,.4);clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);background:rgba(255,212,0,.07);animation:fadeDown .8s .2s both}
+.sp-badge i{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 12px var(--red);animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.2}}
+.sp-logo-wrap{position:relative;margin:26px auto 4px;width:min(440px,82vw);aspect-ratio:2.4/1;display:grid;place-items:center;animation:logoIn 1.4s .3s cubic-bezier(.2,1.4,.3,1) both}
+.sp-logo-wrap img{width:100%;filter:drop-shadow(0 0 30px rgba(255,120,0,.7));animation:logoPulse 2.4s ease-in-out infinite}
+.sp-logo-wrap .fb{white-space:nowrap;display:none;font-family:var(--latin);font-size:clamp(46px,10vw,86px);color:var(--gold);text-shadow:0 0 30px var(--fire),4px 4px 0 var(--red)}
+.sp-logo-wrap.nofx{display:none}
+@keyframes logoIn{from{opacity:0;transform:scale(2.4);filter:blur(20px)}to{opacity:1;transform:none;filter:none}}
+@keyframes logoPulse{50%{filter:drop-shadow(0 0 46px rgba(255,90,0,.95)) brightness(1.15)}}
+.glitch{position:relative;font-family:var(--latin);white-space:nowrap;font-size:clamp(44px,10vw,104px);letter-spacing:.04em;line-height:1.05;color:#fff;text-shadow:0 0 24px rgba(255,90,0,.8);animation:fadeUp .9s .9s both}
+.glitch::before,.glitch::after{content:attr(data-text);position:absolute;inset:0;overflow:hidden}
+.glitch::before{color:var(--ice);transform:translate(3px,0);clip-path:inset(0 0 60% 0);animation:gl1 2.6s infinite steps(1);mix-blend-mode:screen;opacity:.8}
+.glitch::after{color:var(--red);transform:translate(-3px,0);clip-path:inset(55% 0 0 0);animation:gl2 2.2s infinite steps(1);mix-blend-mode:screen;opacity:.8}
+@keyframes gl1{0%,86%,100%{transform:translate(0);clip-path:inset(0 0 100% 0)}88%{transform:translate(6px,-2px);clip-path:inset(10% 0 55% 0)}92%{transform:translate(-5px,1px);clip-path:inset(40% 0 30% 0)}}
+@keyframes gl2{0%,80%,100%{transform:translate(0);clip-path:inset(100% 0 0 0)}83%{transform:translate(-6px,2px);clip-path:inset(60% 0 10% 0)}90%{transform:translate(4px,0);clip-path:inset(30% 0 45% 0)}}
+.sp-sub{color:var(--muted);font-size:clamp(15px,2.2vw,19px);margin-top:6px;animation:fadeUp .9s 1.1s both}
+.sp-load{margin:30px auto 0;width:min(460px,90%);animation:fadeUp .9s 1.2s both}
+.sp-load .bar{height:10px;background:rgba(255,255,255,.08);clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%);overflow:hidden;position:relative}
+.sp-load .bar i{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,var(--red),var(--fire),var(--gold));box-shadow:0 0 20px var(--fire)}
+.sp-load .bar i::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-45deg,rgba(0,0,0,.25) 0 6px,transparent 6px 12px);animation:stripes .6s linear infinite}
+@keyframes stripes{to{background-position:24px 0}}
+.sp-load .row{display:flex;justify-content:space-between;margin-top:10px;font-size:14px;color:var(--muted)}
+.sp-load .row b{font-family:var(--latin);color:var(--gold)}
+#enterBtn{margin-top:28px;display:none}
+#enterBtn.show{display:inline-flex;animation:enterPop .7s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes enterPop{from{opacity:0;transform:scale(.5)}}
+.sp-credit{margin-top:34px;font-size:15px;color:var(--muted);animation:fadeUp .9s 1.4s both}
+.sp-credit strong{color:#fff;font-weight:700}
+.sp-credit .cls{display:inline-block;margin-inline-start:6px;padding:2px 10px;background:var(--fire);color:#160800;font-weight:800;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
+.sp-hint{position:absolute;bottom:18px;left:0;right:0;text-align:center;font-size:12px;color:var(--dim);z-index:3}
+.flash{position:absolute;inset:0;background:radial-gradient(circle,#fff,#ffd27a 30%,#ff5a00 60%,transparent 80%);opacity:0;pointer-events:none;z-index:9}
+#splash.leaving .flash{animation:flash .9s ease-out forwards}
+#splash.leaving .sp-inner{animation:zoomOut .7s ease-in forwards}
+#splash.gone{opacity:0;visibility:hidden;transition:opacity .6s .35s,visibility 0s 1s}
+@keyframes flash{0%{opacity:0;transform:scale(.2)}25%{opacity:1}100%{opacity:0;transform:scale(3)}}
+@keyframes zoomOut{to{transform:scale(2.2);opacity:0;filter:blur(12px)}}
+
+/* ---------- BUTTONS ---------- */
+.btn-fire{position:relative;display:inline-flex;align-items:center;gap:12px;padding:15px 34px;font-weight:800;font-size:clamp(17px,2.4vw,21px);color:#1b0800;background:linear-gradient(180deg,#ffd84a,#ff9a1a 45%,#ff5a00);clip-path:polygon(16px 0,100% 0,calc(100% - 16px) 100%,0 100%);box-shadow:0 0 0 2px rgba(255,212,0,.5),0 10px 40px rgba(255,90,0,.55);overflow:hidden;transition:transform .2s,filter .2s;text-decoration:none}
+.btn-fire::before{content:"";position:absolute;top:0;bottom:0;width:40%;left:-60%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);animation:shine 2.4s infinite}
+@keyframes shine{60%,100%{left:130%}}
+.btn-fire:hover{transform:translateY(-3px) scale(1.04);filter:brightness(1.1)}
+.btn-fire:active{transform:scale(.97)}
+.btn-fire svg{width:22px;height:22px}
+.btn-ghost{display:inline-flex;align-items:center;gap:10px;padding:13px 26px;font-weight:700;font-size:17px;color:var(--txt);border:1.5px solid var(--line);background:rgba(255,163,26,.06);clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%);transition:.2s}
+.btn-ghost:hover{background:rgba(255,163,26,.18);border-color:var(--amber);color:#fff}
+
+/* ---------- APP / HUD ---------- */
+#app{position:fixed;inset:0;z-index:5;opacity:0;transition:opacity .8s}
+#app.on{opacity:1}
+.hud{position:absolute;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;gap:14px;padding:14px clamp(14px,3vw,30px);background:linear-gradient(180deg,rgba(8,8,11,.9),transparent)}
+.hud .brand{display:flex;align-items:center;gap:10px;font-weight:800}
+.hud .brand img{height:30px;width:auto;filter:drop-shadow(0 0 8px rgba(255,120,0,.6))}
+.hud .brand .fb{display:none;font-family:var(--latin);color:var(--gold);font-size:18px}
+.hud .brand.nofx img{display:none}.hud .brand.nofx .fb{display:block}
+.ob{font-family:var(--latin);font-size:12px;padding:4px 10px;background:var(--red);color:#fff;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%);box-shadow:0 0 14px rgba(255,45,58,.6)}
+.hud .spacer{flex:1}
+.hud .count{font-family:var(--latin);font-size:15px;color:var(--muted)}
+.hud .count b{color:var(--gold);font-size:20px}
+.icon-btn{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);background:rgba(255,163,26,.07);clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);transition:.2s}
+.icon-btn:hover{background:rgba(255,163,26,.22);border-color:var(--amber)}
+.icon-btn svg{width:20px;height:20px;stroke:var(--txt);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.progress{position:absolute;top:0;right:0;left:0;height:4px;z-index:21;background:rgba(255,255,255,.06)}
+.progress i{position:absolute;top:0;bottom:0;right:0;width:0;background:linear-gradient(270deg,var(--gold),var(--fire),var(--red));box-shadow:0 0 14px var(--fire);transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.navbar{position:absolute;bottom:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:center;gap:16px;padding:14px;background:linear-gradient(0deg,rgba(8,8,11,.92),transparent)}
+.nav-btn{display:flex;align-items:center;gap:8px;padding:11px 22px;font-weight:800;font-size:16px;border:1.5px solid var(--line);background:rgba(20,15,12,.8);clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%);transition:.2s}
+.nav-btn:hover{border-color:var(--amber);background:rgba(255,120,0,.2)}
+.nav-btn.next{background:linear-gradient(180deg,#ffb12e,#ff5a00);color:#1b0800;border-color:transparent}
+.nav-btn[disabled]{opacity:.3;pointer-events:none}
+.nav-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.6}
+.dots{display:flex;gap:6px;align-items:center}
+.dots button{width:9px;height:9px;background:rgba(255,255,255,.2);transform:rotate(45deg);transition:.25s}
+.dots button.on{background:var(--amber);width:12px;height:12px;box-shadow:0 0 10px var(--fire)}
+.dots button:hover{background:var(--gold)}
+
+/* ---------- SLIDES ---------- */
+.deck{position:absolute;inset:0;z-index:10}
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;overflow-y:auto;overflow-x:hidden;transition:opacity .45s,visibility 0s .45s;scrollbar-width:thin;scrollbar-color:var(--fire) transparent}
+.slide.active{opacity:1;visibility:visible;transition:opacity .45s}
+.slide.in-next .wrap{animation:inNext .75s cubic-bezier(.2,.85,.2,1) backwards}
+.slide.in-prev .wrap{animation:inPrev .75s cubic-bezier(.2,.85,.2,1) backwards}
+@keyframes inNext{from{transform:translateX(-80px);clip-path:polygon(100% 0,100% 0,100% 100%,100% 100%)}to{transform:none;clip-path:polygon(-10% 0,110% 0,110% 100%,-10% 100%)}}
+@keyframes inPrev{from{transform:translateX(80px);clip-path:polygon(0 0,0 0,0 100%,0 100%)}to{transform:none;clip-path:polygon(-10% 0,110% 0,110% 100%,-10% 100%)}}
+.wrap{position:relative;min-height:100%;width:min(1240px,100%);margin:0 auto;padding:88px clamp(16px,4vw,48px) 96px;display:flex;flex-direction:column;justify-content:center}
+.slide.active [data-a]{animation:rise .8s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--d,0) * 90ms + 200ms)}
+@keyframes rise{from{opacity:0;transform:translateY(34px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}}
+
+.s-head{display:flex;align-items:flex-end;gap:18px;margin-bottom:28px}
+.s-num{font-family:var(--latin);font-size:clamp(56px,9vw,96px);line-height:.8;color:transparent;-webkit-text-stroke:2px rgba(255,163,26,.55);text-shadow:0 0 30px rgba(255,90,0,.25)}
+.s-kick{font-size:15px;font-weight:700;color:var(--amber);letter-spacing:.03em;display:flex;align-items:center;gap:8px}
+.s-kick::before{content:"";width:26px;height:3px;background:var(--fire);box-shadow:0 0 8px var(--fire)}
+.s-title{font-family:var(--display);font-size:clamp(36px,6vw,66px);line-height:1.15;background:linear-gradient(180deg,#fff 20%,#ffd27a 55%,#ff7a1a);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 0 rgba(120,30,0,.6))}
+.lead{font-size:clamp(17px,2.1vw,21px);line-height:1.9;color:var(--muted);max-width:780px}
+.lead b{color:#fff}
+.panel{position:relative;background:var(--panel);border:1px solid var(--line);clip-path:polygon(18px 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%,0 18px);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.panel::before{content:"";position:absolute;top:0;right:18px;width:70px;height:3px;background:var(--fire);box-shadow:0 0 10px var(--fire)}
+.hazard{height:10px;background:repeating-linear-gradient(-45deg,var(--gold) 0 14px,#111 14px 28px);opacity:.85}
+.grid{display:grid;gap:18px}
+
+/* ---------- S1 HERO ---------- */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:20px}
+.hero-bg{position:absolute;inset:0;z-index:-1;background:
+  linear-gradient(270deg,rgba(8,8,11,.96) 25%,rgba(8,8,11,.55) 70%,rgba(8,8,11,.85)),
+  linear-gradient(0deg,rgba(8,8,11,1),transparent 40%),
+  url("https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/20269/53c120cc950c9ead6beb2f5f6d8aadff.jpg") center/cover,
+  radial-gradient(circle at 30% 50%,#4a1a00,#08080b 70%)}
+.hero .tag{display:inline-block;font-weight:800;color:var(--gold);font-size:clamp(16px,2vw,20px);margin-bottom:8px}
+.hero h1{white-space:nowrap;font-family:var(--latin);font-size:clamp(40px,6.6vw,100px);direction:ltr;text-align:right;line-height:.95;color:#fff;text-shadow:0 0 40px rgba(255,90,0,.7),0 6px 0 #a32a00}
+.hero h1 span{display:block;font-family:var(--display);font-size:.3em;letter-spacing:0;direction:rtl;color:var(--amber);text-shadow:0 0 18px var(--fire);margin-top:8px}
+.hero p{margin:18px 0 28px}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:14px}
+.hero-char{position:relative;height:min(72vh,640px);display:grid;place-items:end center;translate:calc(var(--mx)*-14px) calc(var(--my)*-10px)}
+.hero-char img{height:100%;width:auto;object-fit:contain;filter:drop-shadow(0 0 40px rgba(255,90,0,.55)) drop-shadow(0 20px 30px rgba(0,0,0,.8));animation:floaty 4s ease-in-out infinite}
+.hero-char .ring{position:absolute;bottom:4%;width:78%;aspect-ratio:3/1;border-radius:50%;border:2px solid rgba(255,163,26,.6);box-shadow:0 0 40px rgba(255,90,0,.5),inset 0 0 40px rgba(255,90,0,.4);animation:ringPulse 2.4s ease-in-out infinite}
+.hero-char .fbx{display:none}
+.hero-char.nofx img{display:none}
+.hero-char.nofx .fbx{display:grid;place-items:center;width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,120,0,.5),transparent 70%);font-family:var(--latin);font-size:90px;color:var(--gold);animation:floaty 4s ease-in-out infinite;align-self:center}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+@keyframes ringPulse{50%{transform:scale(1.08);opacity:.6}}
+.scroll-cue{margin-top:30px;font-size:14px;color:var(--dim);display:flex;align-items:center;gap:10px}
+.kbd{font-family:var(--latin);font-size:12px;padding:3px 8px;border:1px solid var(--line);color:var(--amber)}
+
+/* ---------- S2 ID CARD ---------- */
+.idcard{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.stat{padding:24px 20px 20px;text-align:center;transition:transform .3s}
+.stat:hover{transform:translateY(-6px)}
+.stat .ico{font-size:30px;margin-bottom:6px}
+.stat .num{font-family:var(--latin);font-size:clamp(38px,5vw,56px);color:var(--gold);text-shadow:0 0 22px rgba(255,140,0,.6);line-height:1.1;direction:ltr}
+.stat .lbl{font-weight:700;margin-top:6px}
+.stat .sm{font-size:14px;color:var(--muted);margin-top:4px;line-height:1.6}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.fact{padding:18px 20px;display:flex;gap:14px;align-items:flex-start}
+.fact .k{font-size:13px;color:var(--amber);font-weight:700}
+.fact .v{font-weight:700;font-size:18px;margin-top:2px}
+.fact .v small{display:block;font-weight:400;font-size:14px;color:var(--muted);margin-top:4px;line-height:1.6}
+.fact .badge{flex:none;width:46px;height:46px;display:grid;place-items:center;background:linear-gradient(135deg,var(--fire),var(--red));clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);font-size:20px}
+
+/* ---------- S3 STORY ---------- */
+.story{display:grid;grid-template-columns:260px 1fr;gap:20px}
+.chapters{display:flex;flex-direction:column;gap:10px}
+.chap{text-align:start;padding:16px 18px;border:1px solid var(--line);background:rgba(20,15,12,.7);clip-path:polygon(12px 0,100% 0,100% 100%,0 100%,0 12px);transition:.25s;position:relative}
+.chap small{display:block;font-family:var(--latin);color:var(--amber);font-size:12px}
+.chap b{font-size:18px}
+.chap:hover{background:rgba(255,120,0,.14)}
+.chap.on{background:linear-gradient(270deg,rgba(255,90,0,.35),rgba(255,90,0,.05));border-color:var(--amber);box-shadow:inset -4px 0 0 var(--fire)}
+.page{padding:34px clamp(20px,3vw,40px);min-height:330px;display:flex;flex-direction:column}
+.page .chap-title{font-family:var(--display);font-size:clamp(28px,4vw,42px);color:var(--gold);margin-bottom:14px}
+.page .typed{font-size:clamp(18px,2.2vw,23px);line-height:2;color:#fff;min-height:7em}
+.page .typed::after{content:"▌";color:var(--fire);animation:blink .8s infinite;margin-inline-start:2px}
+.page .typed.done::after{display:none}
+.page .skip{align-self:flex-start;margin-top:auto;font-size:14px;color:var(--dim)}
+.page .skip:hover{color:var(--amber)}
+.lore{margin-top:18px;padding:18px 22px;display:flex;gap:16px;align-items:center;font-size:16px;line-height:1.8;color:var(--muted)}
+.lore b{color:#fff}
+.lore .q{font-family:var(--display);font-size:46px;color:var(--fire);line-height:1}
+
+/* ---------- S4 MATCH ---------- */
+.match{display:grid;grid-template-columns:1.25fr 1fr;gap:20px;align-items:stretch}
+.mapbox{padding:14px;position:relative}
+.mapbox svg{width:100%;height:auto;display:block}
+.map-hud{position:absolute;top:22px;right:26px;left:26px;display:flex;justify-content:space-between;pointer-events:none;font-weight:700}
+.map-hud .alive{background:rgba(0,0,0,.6);padding:6px 12px;border:1px solid var(--line)}
+.map-hud .alive b{font-family:var(--latin);color:var(--gold);font-size:20px}
+.map-hud .clock{font-family:var(--latin);background:rgba(0,0,0,.6);padding:6px 12px;border:1px solid var(--line);color:#fff;direction:ltr}
+.phase{padding:26px;display:flex;flex-direction:column}
+.phase .ph-time{font-family:var(--latin);color:var(--fire);font-size:14px;direction:ltr;text-align:right}
+.phase h3{font-family:var(--display);font-size:clamp(28px,3.4vw,38px);color:#fff;margin:4px 0 10px}
+.phase p{font-size:18px;line-height:1.9;color:var(--muted)}
+.phase .tip{margin-top:14px;padding:12px 14px;background:rgba(255,212,0,.08);border-inline-start:3px solid var(--gold);font-size:15px;line-height:1.7}
+.phase .ctrl{margin-top:auto;padding-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+.timeline{display:flex;gap:6px;margin-top:16px;position:relative}
+.tl{flex:1;padding:10px 4px 8px;text-align:center;font-size:13px;font-weight:700;color:var(--dim);border-top:4px solid rgba(255,255,255,.12);transition:.3s}
+.tl span{display:block;font-size:20px;margin-bottom:2px;filter:grayscale(1);transition:.3s}
+.tl.done{color:var(--muted);border-color:rgba(255,120,0,.6)}
+.tl.done span{filter:none}
+.tl.on{color:var(--gold);border-color:var(--gold);box-shadow:0 -10px 20px -10px var(--gold)}
+.tl.on span{filter:none;transform:scale(1.25)}
+.note{font-size:13px;color:var(--dim);margin-top:8px}
+
+/* ---------- S5 EVENTS (flip) ---------- */
+.events{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.flip{perspective:1000px;height:230px}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.3,1.4,.5,1);transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:18px 16px;display:flex;flex-direction:column;clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px)}
+.flip .f{background:linear-gradient(160deg,rgba(255,120,0,.22),rgba(20,15,12,.92) 60%);border:1px solid var(--line);align-items:center;justify-content:center;text-align:center}
+.flip .f .em{font-size:52px;filter:drop-shadow(0 0 16px rgba(255,140,0,.7));transition:transform .3s}
+.flip:hover .f .em{transform:scale(1.15) rotate(-6deg)}
+.flip .f b{font-size:18px;margin-top:10px;line-height:1.4}
+.flip .f small{font-size:12px;color:var(--dim);margin-top:8px}
+.flip .b{background:linear-gradient(160deg,#2a1206,#120c0a);border:1px solid var(--amber);transform:rotateY(180deg);font-size:15px;line-height:1.75;color:var(--txt)}
+.flip .b b{color:var(--gold);font-size:16px;margin-bottom:6px}
+.flip .new{position:absolute;top:10px;left:10px;font-family:var(--latin);font-size:10px;background:var(--red);color:#fff;padding:3px 7px;animation:blink 1.2s infinite;z-index:2}
+
+/* ---------- S6 CHARACTERS ---------- */
+.chars{display:grid;grid-template-columns:110px 1fr 1fr;gap:20px;align-items:stretch;min-height:560px}
+.roster{display:flex;flex-direction:column;gap:10px}
+.rbtn{position:relative;height:84px;border:2px solid var(--line);background:linear-gradient(160deg,rgba(255,120,0,.18),rgba(15,12,10,.9));overflow:hidden;clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);transition:.25s}
+.rbtn img{position:absolute;inset:0;width:100%;height:170%;object-fit:cover;object-position:top;transition:.3s}
+.rbtn span{position:absolute;bottom:0;left:0;right:0;font-size:13px;font-weight:800;background:linear-gradient(0deg,rgba(0,0,0,.9),transparent);padding:10px 4px 3px;text-align:center}
+.rbtn:hover img{transform:scale(1.1)}
+.rbtn.on{border-color:var(--gold);box-shadow:0 0 20px rgba(255,212,0,.5)}
+.stage{position:relative;display:grid;place-items:end center;overflow:hidden;min-height:500px}
+.stage .bigname{position:absolute;top:8%;left:0;right:0;text-align:center;font-family:var(--latin);font-size:clamp(70px,10vw,150px);color:transparent;-webkit-text-stroke:2px rgba(255,163,26,.28);line-height:1;letter-spacing:.05em;direction:ltr;transform:translateX(calc(var(--mx)*20px))}
+.stage .aura{position:absolute;bottom:8%;width:85%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,110,0,.55),rgba(255,45,58,.15) 45%,transparent 70%);animation:auraP 3s ease-in-out infinite}
+.stage .rings{position:absolute;bottom:-14%;width:62%;aspect-ratio:1;border-radius:50%;border:2px dashed rgba(255,212,0,.55);box-shadow:0 0 30px rgba(255,120,0,.35),inset 0 0 30px rgba(255,120,0,.3);animation:spin 12s linear infinite}
+@keyframes spin{from{transform:rotateX(76deg) rotateZ(0)}to{transform:rotateX(76deg) rotateZ(360deg)}}
+@keyframes auraP{50%{transform:scale(1.1);opacity:.7}}
+.stage img.hero-img{position:relative;height:min(64vh,560px);width:auto;object-fit:contain;filter:drop-shadow(0 0 30px rgba(255,90,0,.5)) drop-shadow(0 18px 24px rgba(0,0,0,.8));animation:floaty 4s ease-in-out infinite;transition:opacity .25s,transform .35s;transform-origin:bottom}
+.stage img.hero-img.swap{opacity:0;transform:translateX(-60px) scale(.9)}
+.stage .fbx{display:none;position:relative;align-self:center;font-family:var(--display);font-size:120px;color:var(--gold);text-shadow:0 0 40px var(--fire);animation:floaty 4s ease-in-out infinite}
+.stage.nofx img.hero-img{display:none}.stage.nofx .fbx{display:block}
+.cinfo{padding:26px;display:flex;flex-direction:column}
+.cinfo .ctitle{color:var(--amber);font-weight:700;font-size:15px}
+.cinfo h3{font-family:var(--display);font-size:clamp(42px,5vw,62px);line-height:1.1;color:#fff;text-shadow:0 0 20px rgba(255,90,0,.5)}
+.cinfo .quote{font-size:17px;color:var(--gold);margin:6px 0 14px;font-style:italic}
+.cinfo .bio{font-size:16px;line-height:1.85;color:var(--muted)}
+.ability{margin-top:16px;display:flex;gap:14px;align-items:flex-start;padding:14px;background:rgba(255,90,0,.1);border:1px solid var(--line)}
+.ability .aico{flex:none;width:58px;height:58px;display:grid;place-items:center;background:linear-gradient(135deg,var(--fire),var(--red));clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);overflow:hidden}
+.ability .aico img{width:100%;height:100%;object-fit:cover}
+.ability .aico.nofx img{display:none}
+.ability .aico.nofx::after{content:"⚡";font-size:26px}
+.ability b{display:block;color:#fff;font-size:17px}
+.ability p{font-size:15px;line-height:1.7;color:var(--muted);margin-top:2px}
+.bars{margin-top:16px;display:grid;gap:9px}
+.bar-row{display:grid;grid-template-columns:62px 1fr 26px;align-items:center;gap:10px;font-size:14px;font-weight:700}
+.bar-row .tr{height:9px;background:rgba(255,255,255,.08);clip-path:polygon(4px 0,100% 0,calc(100% - 4px) 100%,0 100%);overflow:hidden}
+.bar-row .tr i{display:block;height:100%;width:0;background:linear-gradient(270deg,var(--gold),var(--fire));transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.bar-row em{font-family:var(--latin);font-style:normal;color:var(--gold);font-size:13px;text-align:center}
+.age16{display:inline-block;margin-top:10px;padding:3px 12px;background:var(--gold);color:#1a0d00;font-weight:800;font-size:14px;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
+
+/* ---------- TABS (modes/weapons) ---------- */
+.tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+.tab{padding:12px 20px;font-weight:800;font-size:16px;border:1.5px solid var(--line);background:rgba(20,15,12,.75);clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);transition:.2s;display:flex;align-items:center;gap:8px}
+.tab:hover{border-color:var(--amber)}
+.tab.on{background:linear-gradient(180deg,#ffb12e,#ff5a00);color:#1b0800;border-color:transparent;box-shadow:0 6px 24px rgba(255,90,0,.45)}
+.mode{display:none;grid-template-columns:1.2fr 1fr;gap:20px}
+.mode.on{display:grid;animation:rise .6s both}
+.mode .mimg{min-height:340px;background-size:cover;background-position:center;position:relative}
+.mode .mimg::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,8,11,.85),transparent 50%)}
+.mode .mimg .mlabel{position:absolute;bottom:18px;right:20px;z-index:2;font-family:var(--latin);font-size:clamp(26px,4vw,44px);color:#fff;text-shadow:0 0 20px var(--fire)}
+.mode .mtxt{padding:28px}
+.mode .mtxt h3{font-family:var(--display);font-size:clamp(30px,3.6vw,42px);color:var(--gold)}
+.mode .mtxt p{font-size:18px;line-height:1.9;color:var(--muted);margin-top:10px}
+.mode .mtxt ul{list-style:none;margin-top:14px;display:grid;gap:10px}
+.mode .mtxt li{display:flex;gap:10px;font-size:16px;line-height:1.6}
+.mode .mtxt li::before{content:"";flex:none;width:10px;height:10px;margin-top:8px;background:var(--fire);transform:rotate(45deg);box-shadow:0 0 8px var(--fire)}
+
+/* ---------- S8 MAPS ---------- */
+.maps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.mapc{position:relative;height:220px;overflow:hidden;transition:transform .25s;transform-style:preserve-3d;clip-path:polygon(16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%,0 16px);border:1px solid var(--line)}
+.mapc .art{position:absolute;inset:0;transition:transform .5s}
+.mapc:hover .art{transform:scale(1.1)}
+.mapc .art svg{position:absolute;inset:0;width:100%;height:100%;opacity:.45}
+.mapc .lab{position:absolute;inset:auto 0 0 0;padding:16px 18px;background:linear-gradient(0deg,rgba(0,0,0,.92),rgba(0,0,0,.4) 70%,transparent)}
+.mapc .lab b{display:block;font-family:var(--display);font-size:30px}
+.mapc .lab .en{font-family:var(--latin);font-size:12px;color:var(--amber);letter-spacing:.15em}
+.mapc .lab p{font-size:14px;color:var(--muted);line-height:1.6;max-height:0;overflow:hidden;transition:max-height .4s}
+.mapc:hover .lab p,.mapc:focus-within .lab p,.mapc.open .lab p{max-height:90px}
+.mapc .shine{position:absolute;inset:0;background:radial-gradient(circle at var(--px,50%) var(--py,50%),rgba(255,200,120,.35),transparent 45%);opacity:0;transition:opacity .3s;pointer-events:none}
+.mapc:hover .shine{opacity:1}
+
+/* ---------- S9 WEAPONS ---------- */
+.weap{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.wpanel{padding:26px}
+.wpanel h3{font-family:var(--display);font-size:clamp(32px,4vw,46px);color:#fff}
+.wpanel .en{font-family:var(--latin);color:var(--amber);font-size:14px;letter-spacing:.12em}
+.wpanel p{font-size:17px;line-height:1.85;color:var(--muted);margin-top:10px}
+.guns{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.gun{font-family:var(--latin);font-size:14px;padding:6px 12px;border:1px solid var(--line);background:rgba(255,163,26,.07);direction:ltr}
+.gun.n{border-color:var(--red);background:rgba(255,45,58,.15);position:relative;padding-left:44px}
+.gun.n::before{content:"NEW";position:absolute;left:6px;top:50%;transform:translateY(-50%);font-size:9px;background:var(--red);color:#fff;padding:2px 4px}
+.wimg{min-height:300px;background-size:cover;background-position:center;position:relative}
+.wimg::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,8,11,.7),transparent 60%)}
+.wbig{position:absolute;bottom:16px;right:20px;z-index:2;font-family:var(--latin);font-size:clamp(34px,5vw,64px);color:#fff;text-shadow:0 0 24px var(--fire);direction:ltr}
+
+/* ---------- S10 UPDATE ---------- */
+.upd{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.uc{padding:20px 18px;transition:transform .25s}
+.uc:hover{transform:translateY(-6px) scale(1.02)}
+.uc .em{font-size:34px}
+.uc b{display:block;font-size:18px;margin:8px 0 6px;color:#fff}
+.uc p{font-size:15px;line-height:1.7;color:var(--muted)}
+.uc .date{display:inline-block;margin-top:8px;font-size:12px;color:var(--gold);border:1px solid rgba(255,212,0,.35);padding:2px 8px}
+.uc.full{grid-column:1/-1;display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between;background:linear-gradient(135deg,rgba(255,45,58,.22),rgba(20,15,12,.85) 60%)}
+.uc.full .cd{margin-top:0}
+.uc.wide{grid-column:span 2;background:linear-gradient(135deg,rgba(255,90,0,.25),rgba(20,15,12,.85) 60%)}
+.cd{display:flex;gap:10px;margin-top:12px;direction:ltr;justify-content:flex-end}
+.cd div{min-width:64px;text-align:center;padding:8px 6px;background:rgba(0,0,0,.5);border:1px solid var(--line)}
+.cd b{display:block;font-family:var(--latin);font-size:28px;color:var(--gold);margin:0}
+.cd small{font-family:var(--body);font-size:12px;color:var(--muted)}
+
+/* ---------- S11 ACHIEVE ---------- */
+.ach{display:grid;grid-template-columns:1.3fr 1fr;gap:20px}
+.esp{min-height:380px;background-size:cover;background-position:center;position:relative;display:flex;align-items:flex-end}
+.esp::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,8,11,.95) 10%,rgba(8,8,11,.2) 70%)}
+.esp .t{position:relative;z-index:2;padding:26px}
+.esp h3{font-family:var(--display);font-size:clamp(30px,4vw,46px)}
+.esp p{font-size:17px;line-height:1.8;color:var(--muted);margin-top:6px}
+.trophies{display:grid;gap:14px}
+.tro{padding:18px 20px;display:flex;gap:16px;align-items:center}
+.tro .em{font-size:38px;flex:none;filter:drop-shadow(0 0 12px rgba(255,200,0,.6))}
+.tro b{display:block;font-size:18px}
+.tro p{font-size:15px;color:var(--muted);line-height:1.6;margin-top:2px}
+
+/* ---------- S12 QUIZ ---------- */
+.quiz{max-width:860px;margin:0 auto;width:100%;padding:30px clamp(20px,4vw,40px);text-align:center}
+.quiz .qn{font-family:var(--latin);color:var(--amber);font-size:14px}
+.quiz .qt{font-family:var(--display);font-size:clamp(28px,4vw,42px);margin:10px 0 24px;line-height:1.35}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.opt{padding:18px;font-size:19px;font-weight:700;border:1.5px solid var(--line);background:rgba(20,15,12,.8);clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%);transition:.2s}
+.opt:hover{border-color:var(--amber);background:rgba(255,120,0,.15);transform:translateY(-2px)}
+.opt.ok{background:linear-gradient(180deg,#5be37c,#1d9d45);color:#04210d;border-color:transparent;animation:pop .4s}
+.opt.no{background:linear-gradient(180deg,#ff6b6b,#b3122a);border-color:transparent;animation:shake .4s}
+@keyframes pop{50%{transform:scale(1.07)}}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.qfb{min-height:30px;margin-top:16px;font-size:17px;color:var(--muted)}
+.qscore{display:flex;justify-content:center;gap:8px;margin-top:14px}
+.qscore i{width:16px;height:16px;transform:rotate(45deg);background:rgba(255,255,255,.12)}
+.qscore i.ok{background:#3fd36a;box-shadow:0 0 10px #3fd36a}
+.qscore i.no{background:var(--red)}
+.qend .big{font-family:var(--latin);font-size:clamp(60px,10vw,110px);color:var(--gold);text-shadow:0 0 40px var(--fire),5px 5px 0 var(--red);animation:pop 1s infinite}
+
+/* ---------- S13 SMART ---------- */
+.smart{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.sm{padding:24px 20px;text-align:center}
+.sm .em{font-size:44px}
+.sm b{display:block;font-size:19px;margin:10px 0 6px}
+.sm p{font-size:15px;line-height:1.75;color:var(--muted)}
+
+/* ---------- S14 FINAL ---------- */
+.final{text-align:center;align-items:center}
+.final-bg{position:absolute;inset:0;z-index:-1;background:
+  radial-gradient(circle at 50% 55%,rgba(255,90,0,.35),transparent 55%),
+  linear-gradient(0deg,rgba(8,8,11,.9),rgba(8,8,11,.6)),
+  url("https://cdn.wildflamestudio.com/common/web_event/official2/dist/client/img/home_chars_bg_m.ab67bda.jpeg") center/cover,
+  #0b0807}
+.booyah{font-family:var(--latin);font-size:clamp(70px,15vw,190px);line-height:1;color:var(--gold);text-shadow:0 0 50px var(--fire),6px 6px 0 var(--red),12px 12px 0 rgba(0,0,0,.5);direction:ltr;display:flex;justify-content:center}
+.booyah span{display:inline-block}
+.slide.active .booyah span{animation:bounceIn .9s cubic-bezier(.2,1.8,.4,1) both;animation-delay:calc(var(--i) * 80ms + 300ms)}
+@keyframes bounceIn{from{opacity:0;transform:translateY(-120px) scale(.3) rotate(-20deg)}}
+.final .thanks{font-family:var(--display);font-size:clamp(34px,5vw,56px);margin-top:10px}
+.final .credit{margin:22px auto 0;padding:20px 30px;display:inline-block}
+.final .credit small{display:block;color:var(--amber);font-weight:700;font-size:14px}
+.final .credit b{display:block;font-size:clamp(22px,3vw,30px);margin:4px 0}
+.final .credit span{color:var(--muted)}
+.final .ctas{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:28px}
+.final .src{margin-top:26px;font-size:13px;color:var(--dim);line-height:1.8}
+.final .src a{color:var(--muted)}
+
+/* ---------- MENU ---------- */
+#menu{position:fixed;inset:0;z-index:60;background:rgba(5,4,6,.92);backdrop-filter:blur(10px);display:none;overflow:auto;padding:80px clamp(16px,4vw,60px) 40px}
+#menu.on{display:block;animation:fadeUp .35s both}
+#menu h2{font-family:var(--display);font-size:42px;color:var(--gold);margin-bottom:20px}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.mitem{text-align:start;padding:16px 18px;border:1px solid var(--line);background:rgba(20,15,12,.85);clip-path:polygon(12px 0,100% 0,100% 100%,0 100%,0 12px);transition:.2s}
+.mitem small{font-family:var(--latin);color:var(--amber)}
+.mitem b{display:block;font-size:18px;margin-top:2px}
+.mitem:hover,.mitem.on{background:rgba(255,90,0,.22);border-color:var(--amber)}
+#menu .close{position:absolute;top:20px;left:24px}
+
+.toast{position:fixed;bottom:84px;left:50%;transform:translateX(-50%) translateY(20px);z-index:70;padding:10px 20px;background:rgba(20,15,12,.95);border:1px solid var(--amber);font-weight:700;opacity:0;transition:.3s;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%)}
+
+.match>*,.hero>*,.chars>*,.weap>*,.ach>*,.mode.on>*,.story>*,.idcard>*{min-width:0}
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:1050px){
+  .events{grid-template-columns:repeat(3,1fr)}
+  .upd{grid-template-columns:repeat(2,1fr)}
+  .smart{grid-template-columns:repeat(2,1fr)}
+  .chars{grid-template-columns:90px 1fr;min-height:0}
+  .cinfo{grid-column:1/-1}
+}
+@media (max-width:820px){
+  .hero,.match,.mode.on,.weap,.ach{grid-template-columns:1fr}
+  .hero-char{height:44vh;order:-1}
+  .idcard{grid-template-columns:repeat(2,1fr)}
+  .facts{grid-template-columns:1fr}
+  .story{grid-template-columns:1fr}
+  .chapters{flex-direction:row;overflow-x:auto}
+  .chap{flex:none;min-width:150px}
+  .maps{grid-template-columns:repeat(2,1fr)}
+  .s-head{gap:12px}
+  .hud .count{display:none}
+  .timeline{overflow-x:auto;scrollbar-width:none}
+  .tl{flex:none;min-width:70px}
+  .map-hud{top:18px;right:20px;left:20px;font-size:14px}
+  .dots{display:none}
+  .mode .mimg{min-height:220px}
+  .stage{min-height:380px}
+  .stage img.hero-img{height:46vh}
+}
+@media (max-width:560px){
+  .events{grid-template-columns:repeat(2,1fr)}
+  .flip{height:250px}
+  .maps,.upd,.smart{grid-template-columns:1fr}
+  .uc.wide{grid-column:auto}
+  .opts{grid-template-columns:1fr}
+  .chars{grid-template-columns:1fr}
+  .roster{flex-direction:row;overflow-x:auto}
+  .rbtn{flex:none;width:76px;height:76px}
+  .nav-btn .t{display:none}
+  .hud .brand .lbl{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<canvas id="fx"></canvas>
+<div class="vignette"></div>
+
+<!-- ================= SPLASH ================= -->
+<div id="splash">
+  <div class="sp-bg"></div>
+  <canvas id="spfx"></canvas>
+  <div class="sp-beam"></div><div class="sp-beam b2"></div>
+  <div class="sp-scan"></div>
+  <div class="sp-inner">
+    <div class="sp-badge"><i></i> عرض تقديمي تفاعلي · <span class="latin">OB55</span></div>
+    <div class="sp-logo-wrap" id="spLogo">
+      <img src="https://cdn.wildflamestudio.com/common/web_event/official2/dist/client/img/full_logo.969f536.png" alt="Free Fire" onerror="this.parentElement.classList.add('nofx')">
+      <div class="fb">FREE FIRE</div>
+    </div>
+    <h1 class="glitch latin" data-text="FREE FIRE">FREE FIRE</h1>
+    <p class="sp-sub">خمسون لاعبًا، جزيرة واحدة، ونهاية لا يصلها إلا واحد.</p>
+    <div class="sp-load" id="spLoad">
+      <div class="bar"><i id="loadBar"></i></div>
+      <div class="row"><span id="loadTxt">تشغيل محرّك الطائرة...</span><b id="loadPct">0%</b></div>
+    </div>
+    <button class="btn-fire" id="enterBtn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-9z"/></svg>
+      انزل على الجزيرة
+    </button>
+    <div class="sp-credit">إعداد الطالب <strong>خالد قتيبة أحمد خشاشنة</strong> <span class="cls">الصف العاشر (ب)</span></div>
+  </div>
+  <div class="sp-hint">ارفع صوت السماعات قليلًا 🎧</div>
+  <div class="flash"></div>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="app">
+  <div class="progress"><i id="prog"></i></div>
+  <header class="hud">
+    <div class="brand" id="hudBrand">
+      <img src="https://cdn.wildflamestudio.com/common/web_event/official2/dist/client/img/full_logo.969f536.png" alt="" onerror="this.parentElement.classList.add('nofx')">
+      <span class="fb">FREE FIRE</span>
+      <span class="ob">OB55</span>
+    </div>
+    <div class="spacer"></div>
+    <div class="count latin"><b id="cNow">01</b> / <span id="cAll">14</span></div>
+    <button class="icon-btn" id="sndBtn" title="الصوت"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path id="sndWave" d="M16 8a5 5 0 0 1 0 8M19 5a9 9 0 0 1 0 14"/></svg></button>
+    <button class="icon-btn" id="fsBtn" title="ملء الشاشة"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+    <button class="icon-btn" id="menuBtn" title="كل الشرائح"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+  </header>
+
+  <main class="deck" id="deck">
+
+  <!-- 1 HERO -->
+  <section class="slide" data-title="البداية">
+    <div class="hero-bg"></div>
+    <div class="wrap">
+      <div class="hero">
+        <div>
+          <div class="tag" data-a style="--d:0">خمسون لاعبًا · جزيرة واحدة · ناجٍ واحد</div>
+          <h1 class="latin" data-a style="--d:1">FREE FIRE<span>معركة البقاء على الجزيرة</span></h1>
+          <p class="lead" data-a style="--d:2">لعبة <b>باتل رويال</b> على الهاتف، الجولة فيها حوالي <b>عشر دقائق</b> فقط. تبدو قصيرة، لكن كل ثانية فيها قادرة على قلب النتيجة. اليوم سأدخلكم إلى الجزيرة وأريكم كل شيء: القصة، والشخصيات، والأحداث، وآخر تحديث.</p>
+          <div class="ctas" data-a style="--d:3">
+            <button class="btn-fire" data-go="1">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 5l-7 7 7 7z"/></svg> يلا نبدأ
+            </button>
+            <button class="btn-ghost" data-go="2">📖 احكِ لي القصة</button>
+          </div>
+          <div class="scroll-cue" data-a style="--d:4"><span class="kbd">←</span><span class="kbd">→</span> للتنقل · أو اسحب بإصبعك على الهاتف</div>
+        </div>
+        <div class="hero-char" data-a style="--d:2">
+          <div class="ring"></div>
+          <img src="https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/202311/a393f95f57bdaa3d2031a052b6acef24.png" alt="Ignis" onerror="this.parentElement.classList.add('nofx')">
+          <div class="fbx">🔥</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 ID CARD -->
+  <section class="slide" data-title="بطاقة اللعبة" data-init="counters">
+    <div class="wrap">
+      <div class="s-head" data-a style="--d:0">
+        <div class="s-num">02</div>
+        <div><div class="s-kick">بطاقة تعريف</div><h2 class="s-title">قبل أن نقفز من الطائرة</h2></div>
+      </div>
+      <div class="idcard">
+        <div class="panel stat" data-a style="--d:1"><div class="ico">🪂</div><div class="num"><span class="count-up" data-to="50">0</span></div><div class="lbl">لاعبًا في الجولة</div><div class="sm">في وضع باتل رويال</div></div>
+        <div class="panel stat" data-a style="--d:2"><div class="ico">⏱️</div><div class="num">~<span class="count-up" data-to="10">0</span></div><div class="lbl">دقائق للجولة</div><div class="sm">قصيرة وسريعة الإيقاع</div></div>
+        <div class="panel stat" data-a style="--d:3"><div class="ico">🚀</div><div class="num"><span class="count-up" data-to="2017">0</span></div><div class="lbl">سنة الإطلاق</div><div class="sm">وما زالت تتجدّد كل بضعة أشهر</div></div>
+        <div class="panel stat" data-a style="--d:4"><div class="ico">🆕</div><div class="num">OB<span class="count-up" data-to="55">0</span></div><div class="lbl">الإصدار الحالي</div><div class="sm">نزل في سبتمبر 2026</div></div>
+      </div>
+      <div class="facts">
+        <div class="panel fact" data-a style="--d:5"><div class="badge">🏢</div><div><div class="k">من صنعها؟</div><div class="v">Garena<small>طوّرها استوديو 111 Dots ونشرتها شركة Garena السنغافورية.</small></div></div></div>
+        <div class="panel fact" data-a style="--d:6"><div class="badge">📱</div><div><div class="k">أين تُلعب؟</div><div class="v">Android و iOS<small>مصمّمة لتعمل على أغلب الهواتف تقريبًا، حتى المتوسطة منها.</small></div></div></div>
+        <div class="panel fact" data-a style="--d:7"><div class="badge">💎</div><div><div class="k">النسخة الأقوى</div><div class="v">Free Fire MAX<small>رسوميات أعلى، ومع ذلك يلعب لاعبوها مع لاعبي النسخة العادية في نفس الجولات.</small></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 STORY -->
+  <section class="slide" data-title="القصة" data-init="story">
+    <div class="wrap">
+      <div class="s-head" data-a style="--d:0">
+        <div class="s-num">03</div>
+        <div><div class="s-kick">ما الذي تحكيه اللعبة؟</div><h2 class="s-title">القصة في أربعة فصول</h2></div>
+      </div>
+      <div class="story">
+        <div class="chapters" data-a style="--d:1">
+          <button class="chap on" data-ch="0"><small>CHAPTER 01</small><b>✈️ الطائرة</b></button>
+          <button class="chap" data-ch="1"><small>CHAPTER 02</small><b>🪂 الهبوط</b></button>
+          <button class="chap" data-ch="2"><small>CHAPTER 03</small><b>⭕ الدائرة</b></button>
+          <button class="chap" data-ch="3"><small>CHAPTER 04</small><b>🏆 بوياه!</b></button>
+        </div>
+        <div class="panel page" data-a style="--d:2">
+          <div class="chap-title" id="chTitle">الطائرة</div>
+          <div class="typed" id="chText"></div>
+          <button class="skip" id="chSkip">اعرض النص كاملًا ⏭</button>
+        </div>
+      </div>
+      <div class="panel lore" data-a style="--d:3">
+        <div class="q">”</div>
+        <div>عالم Free Fire أكبر من الجزيرة. لكل شخصية ماضٍ وحكاية: <b>نينجا</b> يحمون إرث عائلاتهم، و<b>مخترع</b> عمره 16 سنة، و<b>هاكر</b> لا يترك أثرًا، وشاب يشعل النار بيديه. اللعبة تحكي هذه الحكايات عبر قصص وقصص مصوّرة على موقعها الرسمي.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 MATCH -->
+  <section class="slide" data-title="مراحل الجولة" data-init="match">
+    <div class="wrap">
+      <div class="s-head" data-a style="--d:0">
+        <div class="s-num">04</div>
+        <div><div class="s-kick">جرّبها بنفسك</div><h2 class="s-title">جولة كاملة في دقيقة</h2></div>
+      </div>
+      <div class="match">
+        <div class="panel mapbox" data-a style="--d:1">
+          <div class="map-hud"><div class="alive">المتبقّون: <b id="aliveN">50</b></div><div class="clock" id="clockT">00:00</div></div>
+          <svg viewBox="0 0 400 300" id="mapSvg" aria-label="خريطة توضيحية للجولة">
+            <defs>
+              <radialGradient id="sea" cx="50%" cy="50%" r="70%"><stop offset="0" stop-color="#0d3550"/><stop offset="1" stop-color="#06131f"/></radialGradient>
+              <linearGradient id="land" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f7a3a"/><stop offset="1" stop-color="#2e4a25"/></linearGradient>
+              <mask id="zmask"><rect width="400" height="300" fill="#fff"/><circle id="zHole" cx="200" cy="150" r="260" fill="#000"/></mask>
+              <filter id="glow"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <rect width="400" height="300" fill="url(#sea)"/>
+            <g opacity=".25" stroke="#7fd3ff" stroke-width=".5" fill="none">
+              <path d="M0 40h400M0 80h400M0 120h400M0 160h400M0 200h400M0 240h400M0 280h400"/>
+              <path d="M40 0v300M80 0v300M120 0v300M160 0v300M200 0v300M240 0v300M280 0v300M320 0v300M360 0v300"/>
+            </g>
+            <path d="M60,150 C40,92 108,42 180,56 C242,30 330,52 352,112 C376,172 342,240 272,256 C202,276 120,262 86,222 C66,200 70,180 60,150 Z" fill="url(#land)" stroke="#e8d79a" stroke-width="3"/>
+            <path d="M120,90 C160,130 190,120 220,170 C240,205 280,215 320,205" fill="none" stroke="#3a8fc4" stroke-width="5" stroke-linecap="round" opacity=".8"/>
+            <g fill="#c9b48a" opacity=".85">
+              <rect x="150" y="85" width="14" height="10"/><rect x="168" y="80" width="10" height="14"/><rect x="250" y="95" width="16" height="12"/><rect x="280" y="140" width="12" height="12"/>
+              <rect x="120" y="180" width="14" height="12"/><rect x="200" y="210" width="16" height="10"/><rect x="230" y="130" width="10" height="10"/><rect x="300" y="200" width="12" height="10"/>
+            </g>
+            <rect width="400" height="300" fill="rgba(255,60,20,.33)" mask="url(#zmask)"/>
+            <circle id="zRing" cx="200" cy="150" r="260" fill="none" stroke="#fff" stroke-width="2.2" stroke-dasharray="6 4" filter="url(#glow)"/>
+            <g id="dotsG"></g>
+            <g id="dropsG"></g>
+            <path id="flight" d="M10,30 L390,270" stroke="#fff" stroke-width="1.6" stroke-dasharray="4 5" opacity=".7"/>
+            <g id="plane" transform="translate(10,30)">
+              <g transform="rotate(32)" filter="url(#glow)"><path d="M14 0 L-8 -3 L-12 -11 L-15 -11 L-12 -3 L-14 -2 L-16 -6 L-18 -6 L-17 0 L-18 6 L-16 6 L-14 2 L-12 3 L-15 11 L-12 11 L-8 3 Z" fill="#ffd400"/></g>
+            </g>
+          </svg>
+          <div class="timeline" id="tline"></div>
+        </div>
+        <div class="panel phase" data-a style="--d:2">
+          <div class="ph-time" id="phTime">00:00</div>
+          <h3 id="phTitle">على متن الطائرة</h3>
+          <p id="phText"></p>
+          <div class="tip" id="phTip"></div>
+          <div class="ctrl">
+            <button class="btn-fire" id="phNext" style="padding:12px 24px;font-size:17px">المرحلة التالية ◀</button>
+            <button class="btn-ghost" id="phAuto">▶ شغّل الجولة تلقائيًا</button>
+          </div>
+          <div class="note">* الأرقام على الخريطة للتوضيح، وأوقات صناديق الإمداد من ملاحظات تحديث OB55 الرسمية.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 EVENTS -->
+  <section class="slide" data-title="أحداث اللعبة">
+    <div class="wrap">
+      <div class="s-head" data-a style="--d:0">
+        <div class="s-num">05</div>
+        <div><div class="s-kick">اضغط على أي بطاقة لتنقلب</div><h2 class="s-title">ماذا يحدث داخل الجولة؟</h2></div>
+      </div>
+      <div class="events" id="events"></div>
+    </div>
+  </section>
+
+  <!-- 6 CHARACTERS -->
+  <section class="slide" data-title="الشخصيات" data-init="chars">
+    <div class="wrap">
+      <div class="s-head" data-a style="--d:0">
+        <div class="s-num">06</div>
+        <div><div class="s-kick">اختر مقاتلك</div><h2 class="s-title">الشخصيات وقدراتها</h2></div>
+      </div>
+      <div class="chars">
+        <div class="roster" id="roster" data-a style="--d:1"></div>
+        <div class="stage" id="stage" data-a style="--d:2">
+          <div class="bigname" id="bigName">IGNIS</div>
+          <div class="aura"></div><div class="rings"></div>
+          <img class="hero-img" id="cImg" alt="" onerror="document.getElementById('stage').classList.add('nofx')">
+          <div class="fbx" id="cFb">🔥</div>
+        </div>
+        <div class="panel cinfo" data-a style="--d:3">
+          <div class="ctitle" id="cTitle"></div>
+          <h3 id="cName"></h3>
+          <div class="quote" id="cQuote"></div>
+          <div class="bio" id="cBio"></div>
+          <div id="cAge"></div>
+          <div class="ability">
+            <div class="aico" id="cAico"><img id="cAimg" alt="" onerror="this.parentElement.classList.add('nofx')"></div>
+            <div><b id="cAname"></b><p id="cAtext"></p></div>
+          </div>
+          <div class="bars" id="cBars"></div>
+          <div class="note">* التقييم بالأرقام رأيي الشخصي حسب أسلوب كل شخصية، وليس رقمًا رسميًا.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 MODES -->
+  <section class="slide" data-title="أوضاع اللعب">
+    <div class="wrap">
+      <div class="s-head" data-a style="--d:0">
+        <div class="s-num">07</div>
+        <div><div class="s-kick">كيف تحب أن تلعب؟</div><h2 class="s-title">أوضاع اللعب</h2></div>
+      </div>
+      <div class="tabs" data-a style="--d:1" id="modeTabs">
+        <button class="tab on" data-m="0">🪂 باتل رويال</button>
+        <button class="tab" data-m="1">⚔️ كلاش سكواد</button>
+        <button class="tab" data-m="2">🐺 الذئب الوحيد</button>
+        <button class="tab" data-m="3">🛠️ كرافت لاند</button>
+      </div>
+      <div data-a style="--d:2">
+        <div class="mode on">
+          <div class="panel mimg" style="background-image:url('https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/20269/6b0b45e2727f6314d49d4d50a9028c8f.jpg'),linear-gradient(135deg,#7a2a00,#1a0d06)"><div class="mlabel">BATTLE ROYALE</div></div>
+          <div class="panel mtxt"><h3>باتل رويال</h3><p>الوضع الأساسي والأشهر: 50 لاعبًا على جزيرة واحدة، والدائرة تضيق حتى يبقى فريق واحد.</p>
+            <ul><li>تلعب وحدك، أو مع صديق، أو بفريق من أربعة.</li><li>تجمع السلاح والدروع من الأرض والبيوت وصناديق الإمداد.</li><li>نقاط الإحياء تعطيك فرصة ثانية لإرجاع زملائك.</li></ul></div>
+        </div>
+        <div class="mode">
+          <div class="panel mimg" style="background-image:url('https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/20269/d94d9ba1323d9065ec948f0a2202e7a3.jpeg'),linear-gradient(135deg,#5a0a14,#1a0d06)"><div class="mlabel">CLASH SQUAD</div></div>
+          <div class="panel mtxt"><h3>كلاش سكواد</h3><p>أربعة ضد أربعة في جولات متتالية على خريطة صغيرة. لا جمع غنائم هنا، بل تشتري سلاحك في بداية كل جولة.</p>
+            <ul><li>تشتري الأسلحة والقنابل بعملة الوضع (CS Cash).</li><li>الفريق الذي يكسب عددًا معيّنًا من الجولات يفوز.</li><li>في OB55 أُضيفت قنبلة اللهب وقنبلة السونار التي تكشف الأعداء.</li></ul></div>
+        </div>
+        <div class="mode">
+          <div class="panel mimg" style="background-image:url('https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/20269/4916366f5b345410dde655a038c7aa93.jpeg'),linear-gradient(135deg,#3a1a00,#0e0806)"><div class="mlabel">LONE WOLF</div></div>
+          <div class="panel mtxt"><h3>الذئب الوحيد</h3><p>مواجهة مباشرة: واحد ضد واحد. لا أعذار ولا زملاء، المهارة وحدها تحسم الأمر.</p>
+            <ul><li>جديد OB55: خيار «مبارزة الشرف» Duel of Honor.</li><li>تتفاعل مع خصمك بالرموز أثناء النزال.</li><li>صفحة فوز خاصة يمكنك مشاركتها، وتظهر نتائجك في ملفك الشخصي.</li></ul></div>
+        </div>
+        <div class="mode">
+          <div class="panel mimg" style="background-image:url('https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/20269/53c120cc950c9ead6beb2f5f6d8aadff.jpg'),linear-gradient(135deg,#0a3a5a,#06131f)"><div class="mlabel">CRAFTLAND</div></div>
+          <div class="panel mtxt"><h3>كرافت لاند</h3><p>هنا أنت المصمّم: تبني خريطتك وطريقة اللعب الخاصة بك، ويلعبها غيرك من اللاعبين حول العالم.</p>
+            <ul><li>خرائط يصنعها اللاعبون بأنفسهم.</li><li>بعد إنهاء الخريطة ترى اسم صانعها ويمكنك متابعته.</li><li>كل خريطة لها «كود ساحة» تشاركه مع أصدقائك.</li></ul></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 MAPS -->
+  <section class="slide" data-title="الخرائط">
+    <div class="wrap">
+      <div class="s-head" data-a style="--d:0">
+        <div class="s-num">08</div>
+        <div><div class="s-kick">أين ستهبط اليوم؟</div><h2 class="s-title">خرائط الجزيرة</h2></div>
+      </div>
+      <div class="maps" id="maps"></div>
+    </div>
+  </section>
+
+  <!-- 9 WEAPONS -->
+  <section class="slide" data-title="الأسلحة" data-init="weapons">
+    <div class="wrap">
+      <div class="s-head" data-a style="--d:0">
+        <div class="s-num">09</div>
+        <div><div class="s-kick">لكل سلاح شخصية</div><h2 class="s-title">ترسانة الأسلحة</h2></div>
+      </div>
+      <div class="tabs" id="wTabs" data-a style="--d:1"></div>
+      <div class="weap" data-a style="--d:2">
+        <div class="panel wpanel">
+          <div class="en" id="wEn"></div>
+          <h3 id="wName"></h3>
+          <p id="wText"></p>
+          <div class="bars" id="wBars"></div>
+          <div class="guns" id="wGuns"></div>
+        </div>
+        <div class="panel wimg" style="background-image:url('https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/20269/eec6289cb66cedb3ea07206a4bc4c773.jpeg'),linear-gradient(135deg,#3a1500,#0b0807)"><div class="wbig" id="wBig">SMG</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 UPDATE -->
+  <section class="slide" data-title="تحديث OB55">
+    <div class="wrap">
+      <div class="s-head" data-a style="--d:0">
+        <div class="s-num">10</div>
+        <div><div class="s-kick">آخر إصدار · سبتمبر 2026</div><h2 class="s-title">ما الجديد في OB55؟</h2></div>
+      </div>
+      <div class="upd">
+        <div class="panel uc wide" data-a style="--d:1"><div class="em">🍥</div><b>عودة التعاون مع «ناروتو شيبودن»</b><p>الوحش ذو الذيول التسعة قد يغيّر ساحة المعركة قبل بداية الجولة: يشعل الطائرة ويجبر الجميع على القفز، أو يفتح مخازن السلاح بلا مفتاح. وعادت قرية الورق المخفي كمكان انتظار قبل الجولات.</p></div>
+        <div class="panel uc" data-a style="--d:2"><div class="em">🌀</div><b>بطاقات النينجتسو</b><p>راسينغان، تشيدوري، كرة النار، وتنين الماء... قدرات تلتقطها من الأرض وتستخدمها في القتال.</p></div>
+        <div class="panel uc" data-a style="--d:3"><div class="em">🗡️</div><b>شوريكن وكوناي</b><p>أسلحة ثانوية سريعة، ومنها كوناي ناري يحرق، وكوناي برقي يعطّل الخريطة المصغّرة لدى الخصم.</p></div>
+        <div class="panel uc" data-a style="--d:4"><div class="em">🔫</div><b>4 أسلحة جديدة</b><p>M7 و Skorp و RPK و Hawk، بنظام ارتداد جديد يرفع السلاح للأعلى أثناء الإطلاق.</p><span class="date">من 1 أكتوبر</span></div>
+        <div class="panel uc" data-a style="--d:5"><div class="em">🌪️</div><b>كينتا بشكل جديد</b><p>إعصار يخترق جدران الغلو، ثم ينتقل كينتا إلى مكانه فورًا ويحصل على درع.</p></div>
+        <div class="panel uc" data-a style="--d:6"><div class="em">🚂</div><b>نظام «القطار»</b><p>زر واحد وتمشي تلقائيًا خلف زميلك في طابور. أي اشتباك يفكّ القطار فورًا.</p></div>
+        <div class="panel uc" data-a style="--d:7"><div class="em">🎒</div><b>جهازان بدل جهاز</b><p>صار بإمكانك حمل جهاز نشط وآخر سلبي معًا، مثل المنصّة الطائرة والمشوّش.</p></div>
+        <div class="panel uc full" data-a style="--d:8"><div><div class="em">⏳</div><b>العدّ التنازلي للتحديث القادم OB56</b><p>حسب مواقع متابعة اللعبة، الموعد المتوقع 16 ديسمبر 2026 (غير مؤكد رسميًا بعد).</p></div>
+          <div class="cd" id="cd"><div><b id="cdD">00</b><small>يوم</small></div><div><b id="cdH">00</b><small>ساعة</small></div><div><b id="cdM">00</b><small>دقيقة</small></div><div><b id="cdS">00</b><small>ثانية</small></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 ACHIEVEMENTS -->
+  <section class="slide" data-title="إنجازات وبطولات">
+    <div class="wrap">
+      <div class="s-head" data-a style="--d:0">
+        <div class="s-num">11</div>
+        <div><div class="s-kick">أكثر من مجرد لعبة</div><h2 class="s-title">بطولات وإنجازات</h2></div>
+      </div>
+      <div class="ach">
+        <div class="panel esp" data-a style="--d:1;background-image:url('https://cdn.wildflamestudio.com/common/web_event/official2/dist/client/img/home_esports_bg_m.658d754.jpeg'),linear-gradient(135deg,#3a1500,#0b0807)">
+          <div class="t"><h3>كأس العالم لـ Free Fire <span class="latin" style="font-size:.5em;color:var(--amber)">FFWS</span></h3><p>بطولة Free Fire World Series تنظّمها Garena، وتجمع أقوى الفرق من مختلف الدول في مواجهات حيّة أمام الجمهور. هي الحلم الأكبر لكل لاعب محترف.</p></div>
+        </div>
+        <div class="trophies">
+          <div class="panel tro" data-a style="--d:2"><div class="em">🏅</div><div><b>جائزة Pocket Gamer 2026</b><p>فازت Free Fire بجائزة «أفضل استخدام لعلامة مرخّصة» بفضل تعاوناتها مع أعمال شهيرة.</p></div></div>
+          <div class="panel tro" data-a style="--d:3"><div class="em">🌍</div><div><b>تعمل على أغلب الهواتف</b><p>سرّ انتشارها الكبير أنها لا تحتاج هاتفًا غاليًا، فوصلت إلى ملايين اللاعبين حول العالم.</p></div></div>
+          <div class="panel tro" data-a style="--d:4"><div class="em">🔗</div><div><b>تقنية Firelink</b><p>تجمع لاعبي النسخة العادية ونسخة MAX في نفس الجولة وبنفس الحساب.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 QUIZ -->
+  <section class="slide" data-title="تحدّي سريع" data-init="quiz">
+    <div class="wrap">
+      <div class="s-head" data-a style="--d:0">
+        <div class="s-num">12</div>
+        <div><div class="s-kick">هل كنتم منتبهين؟ 😏</div><h2 class="s-title">تحدّي الـ BOOYAH</h2></div>
+      </div>
+      <div class="panel quiz" id="quiz" data-a style="--d:1"></div>
+    </div>
+  </section>
+
+  <!-- 13 SMART -->
+  <section class="slide" data-title="العب بذكاء">
+    <div class="wrap">
+      <div class="s-head" data-a style="--d:0">
+        <div class="s-num">13</div>
+        <div><div class="s-kick">نصيحة من لاعب</div><h2 class="s-title">العب بذكاء، لا تخلّي اللعبة تلعب فيك</h2></div>
+      </div>
+      <div class="smart">
+        <div class="panel sm" data-a style="--d:1"><div class="em">⏰</div><b>حدّد وقتك</b><p>جولتان أو ثلاث بعد الدراسة تكفي. الفوز الحقيقي أن تنهي واجباتك أولًا.</p></div>
+        <div class="panel sm" data-a style="--d:2"><div class="em">👀</div><b>ريّح عيونك</b><p>كل 20 دقيقة انظر إلى شيء بعيد لمدة 20 ثانية، واشرب ماء.</p></div>
+        <div class="panel sm" data-a style="--d:3"><div class="em">🔐</div><b>احمِ حسابك</b><p>لا تعطِ كلمة السر لأحد، ولا تصدّق مواقع «الجواهر المجانية»؛ أغلبها احتيال.</p></div>
+        <div class="panel sm" data-a style="--d:4"><div class="em">🤝</div><b>العب بروح رياضية</b><p>احترم زملاءك وخصومك. الخسارة جزء من اللعبة، والجولة القادمة فرصة جديدة.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 FINAL -->
+  <section class="slide" data-title="النهاية" data-init="final">
+    <div class="final-bg"></div>
+    <div class="wrap final">
+      <div class="booyah" id="booyah"></div>
+      <div class="thanks" data-a style="--d:2">شكرًا لحسن استماعكم!</div>
+      <p class="lead" data-a style="--d:3;margin:10px auto 0">الآن تعرفون القصة والشخصيات والأحداث وآخر التحديثات... بقي شيء واحد: أن تدخلوا الجزيرة بأنفسكم.</p>
+      <div class="ctas" data-a style="--d:4">
+        <a class="btn-fire" href="https://ff.garena.com/en" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-9z"/></svg>
+          ادخل عالم Free Fire
+        </a>
+        <button class="btn-ghost" data-go="0">↻ أعد العرض من البداية</button>
+      </div>
+      <div class="panel credit" data-a style="--d:5">
+        <small>إعداد وتقديم الطالب</small>
+        <b>خالد قتيبة أحمد خشاشنة</b>
+        <span>الصف العاشر (ب)</span>
+      </div>
+      <div class="src" data-a style="--d:6">المصادر: الموقع الرسمي للعبة <a href="https://ff.garena.com/en" target="_blank" rel="noopener">ff.garena.com</a> · ملاحظات تحديث OB55 الرسمية (10/09/2026)<br>الصور والشعارات ملك لشركة Garena، واستُخدمت هنا لغرض تعليمي فقط.</div>
+    </div>
+  </section>
+
+  </main>
+
+  <nav class="navbar">
+    <button class="nav-btn" id="prevBtn"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg><span class="t">السابق</span></button>
+    <div class="dots" id="dots"></div>
+    <button class="nav-btn next" id="nextBtn"><span class="t">التالي</span><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+  </nav>
+</div>
+
+<div id="menu">
+  <button class="icon-btn close" id="menuClose" title="إغلاق"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <h2>كل الشرائح</h2>
+  <div class="mgrid" id="mgrid"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const IMG='https://cdn.wildflamestudio.com/common/web_event/official2.ff.garena.all/';
+
+/* ================= SOUND (synth, no files) ================= */
+let AC=null, muted=false;
+function ac(){ if(!AC){ try{AC=new (window.AudioContext||window.webkitAudioContext)()}catch(e){} } if(AC&&AC.state==='suspended') AC.resume(); return AC; }
+function tone(f,d,type='sine',v=.08,f2=null,delay=0){ const c=ac(); if(!c||muted) return; const t=c.currentTime+delay; const o=c.createOscillator(), g=c.createGain(); o.type=type; o.frequency.setValueAtTime(f,t); if(f2) o.frequency.exponentialRampToValueAtTime(f2,t+d); g.gain.setValueAtTime(v,t); g.gain.exponentialRampToValueAtTime(.0001,t+d); o.connect(g).connect(c.destination); o.start(t); o.stop(t+d+.02); }
+function noise(d,v=.12,freq=1200,q=.8,sweep=null){ const c=ac(); if(!c||muted) return; const t=c.currentTime; const b=c.createBuffer(1,c.sampleRate*d,c.sampleRate), ch=b.getChannelData(0); for(let i=0;i<ch.length;i++) ch[i]=Math.random()*2-1; const s=c.createBufferSource(); s.buffer=b; const fl=c.createBiquadFilter(); fl.type='bandpass'; fl.frequency.setValueAtTime(freq,t); if(sweep) fl.frequency.exponentialRampToValueAtTime(sweep,t+d); fl.Q.value=q; const g=c.createGain(); g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(v,t+d*.25); g.gain.exponentialRampToValueAtTime(.0001,t+d); s.connect(fl).connect(g).connect(c.destination); s.start(t); }
+const sfx={
+  click(){tone(1200,.05,'square',.03); tone(1800,.04,'square',.02,null,.03)},
+  hover(){tone(900,.03,'triangle',.015)},
+  whoosh(){noise(.45,.09,400,.7,2600)},
+  boom(){tone(140,.9,'sine',.35,32); noise(1.1,.25,300,.5,80)},
+  ok(){[660,880,1320].forEach((f,i)=>tone(f,.18,'triangle',.07,null,i*.07))},
+  no(){tone(220,.3,'sawtooth',.05,110)},
+  booyah(){[523,659,784,1047,1319].forEach((f,i)=>tone(f,.5,'triangle',.07,null,i*.09)); noise(.8,.08,3000,.4,600)},
+  flip(){noise(.18,.07,2000,1.5,900)},
+  tick(){tone(1500,.02,'square',.012)}
+};
+
+/* ================= PARTICLES ================= */
+function Embers(cv,{density=60,spark=false}={}){
+  const x=cv.getContext('2d'); let W,H,P=[],dpr=Math.min(devicePixelRatio||1,2),alive=true;
+  function rs(){W=cv.width=innerWidth*dpr;H=cv.height=innerHeight*dpr;cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px'}
+  rs(); addEventListener('resize',rs);
+  const mk=(bx,by,burst)=>{const a=burst?Math.random()*Math.PI*2:-Math.PI/2+(Math.random()-.5)*.6, sp=burst?(2+Math.random()*7)*dpr:(.4+Math.random()*1.4)*dpr;
+    return {x:bx??Math.random()*W,y:by??H+10*dpr,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,r:(burst?1+Math.random()*2.2:.8+Math.random()*2.6)*dpr,life:1,dec:burst?.02+Math.random()*.02:.003+Math.random()*.006,h:20+Math.random()*30,burst,wob:Math.random()*6}};
+  for(let i=0;i<density;i++){const p=mk();p.y=Math.random()*H;P.push(p)}
+  function frame(){ if(!alive) return; x.clearRect(0,0,W,H); x.globalCompositeOperation='lighter';
+    while(P.filter(p=>!p.burst).length<density) P.push(mk());
+    for(let i=P.length-1;i>=0;i--){const p=P[i]; p.wob+=.05; p.x+=p.vx+(p.burst?0:Math.sin(p.wob)*.4*dpr); p.y+=p.vy; if(p.burst){p.vy+=.12*dpr;p.vx*=.97} p.life-=p.dec;
+      if(p.life<=0||p.y<-20){P.splice(i,1);continue}
+      const g=x.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*4); g.addColorStop(0,`hsla(${p.h+20},100%,75%,${p.life})`); g.addColorStop(.4,`hsla(${p.h},100%,55%,${p.life*.6})`); g.addColorStop(1,'hsla(10,100%,50%,0)');
+      x.fillStyle=g; x.beginPath(); x.arc(p.x,p.y,p.r*4,0,7); x.fill();
+      if(spark&&!p.burst&&Math.random()<.002){ for(let k=0;k<6;k++) P.push(mk(p.x,p.y,true)) }
+    }
+    requestAnimationFrame(frame)}
+  frame();
+  return {burst(cx,cy,n=24){for(let i=0;i<n;i++)P.push(mk(cx*dpr,cy*dpr,true))},stop(){alive=false},set density(v){density=v}};
+}
+const spE=Embers($('#spfx'),{density:90,spark:true});
+let fxE=null;
+
+/* ================= SPLASH ================= */
+const loadMsgs=['تشغيل محرّك الطائرة...','تعبئة الذخيرة...','رسم المنطقة الآمنة...','توزيع صناديق الإمداد...','تجهيز الشخصيات...','جاهز للهبوط!'];
+let pct=0;
+const preload=['https://cdn.wildflamestudio.com/common/web_event/official2/dist/client/img/home_chars_bg_m.ab67bda.jpeg',IMG+'20269/53c120cc950c9ead6beb2f5f6d8aadff.jpg',IMG+'20269/6b0b45e2727f6314d49d4d50a9028c8f.jpg',IMG+'202311/a393f95f57bdaa3d2031a052b6acef24.png'];
+preload.forEach(u=>{const i=new Image();i.referrerPolicy='no-referrer';i.src=u});
+const lt=setInterval(()=>{
+  pct=Math.min(100,pct+Math.random()*7+2);
+  $('#loadBar').style.width=pct+'%'; $('#loadPct').textContent=Math.floor(pct)+'%';
+  $('#loadTxt').textContent=loadMsgs[Math.min(loadMsgs.length-1,Math.floor(pct/100*(loadMsgs.length-1)))];
+  if(pct>=100){clearInterval(lt); $('#loadTxt').textContent=loadMsgs.at(-1); setTimeout(()=>{$('#spLoad').style.opacity=.35;$('#enterBtn').classList.add('show')},250)}
+},110);
+let entered=false;
+function enter(){
+  if(entered) return; entered=true; ac(); sfx.boom();
+  const r=$('#enterBtn').getBoundingClientRect(); spE.burst(r.left+r.width/2,r.top+r.height/2,90);
+  $('#splash').classList.add('leaving');
+  setTimeout(()=>{ $('#splash').classList.add('gone'); $('#app').classList.add('on'); fxE=Embers($('#fx'),{density:38}); show(0,1,true); },650);
+  setTimeout(()=>{ spE.stop(); $('#splash').style.display='none' },1700);
+}
+$('#enterBtn').addEventListener('click',enter);
+$('#enterBtn').addEventListener('mouseenter',()=>{ac();sfx.hover()});
+
+/* ================= DECK ================= */
+const slides=$$('.slide'); let cur=-1;
+const pad=n=>String(n).padStart(2,'0');
+$('#cAll').textContent=pad(slides.length);
+const dots=$('#dots'), mgrid=$('#mgrid');
+slides.forEach((s,i)=>{
+  const d=document.createElement('button'); d.title=s.dataset.title; d.onclick=()=>go(i); dots.appendChild(d);
+  const m=document.createElement('button'); m.className='mitem'; m.innerHTML=`<small>${pad(i+1)}</small><b>${s.dataset.title}</b>`; m.onclick=()=>{toggleMenu(false);go(i)}; mgrid.appendChild(m);
+});
+function show(n,dir=1,first=false){
+  if(n<0||n>=slides.length||n===cur) return;
+  const old=slides[cur];
+  if(old){old.classList.remove('active','in-next','in-prev')}
+  cur=n; const s=slides[cur];
+  s.classList.remove('in-next','in-prev'); void s.offsetWidth;
+  s.classList.add('active',dir>0?'in-next':'in-prev'); s.scrollTop=0;
+  $('#cNow').textContent=pad(cur+1);
+  $('#prog').style.width=((cur+1)/slides.length*100)+'%';
+  $$('#dots button').forEach((d,i)=>d.classList.toggle('on',i===cur));
+  $$('.mitem').forEach((d,i)=>d.classList.toggle('on',i===cur));
+  $('#prevBtn').disabled=cur===0; $('#nextBtn').disabled=cur===slides.length-1;
+  if(!first) sfx.whoosh();
+  const init=s.dataset.init; if(init&&inits[init]) inits[init](s);
+  if(cur!==3) stopAuto();
+}
+function go(n){ show(n, n>cur?1:-1) }
+const next=()=>go(cur+1), prev=()=>go(cur-1);
+$('#nextBtn').onclick=next; $('#prevBtn').onclick=prev;
+document.addEventListener('click',e=>{const g=e.target.closest('[data-go]'); if(g){go(+g.dataset.go)}});
+addEventListener('keydown',e=>{
+  if(!entered){ if(e.key==='Enter'||e.key===' '){ if($('#enterBtn').classList.contains('show')) enter() } return }
+  if($('#menu').classList.contains('on')&&e.key==='Escape'){toggleMenu(false);return}
+  if(['ArrowLeft','PageDown',' '].includes(e.key)){e.preventDefault();next()}
+  else if(['ArrowRight','PageUp'].includes(e.key)){e.preventDefault();prev()}
+  else if(e.key==='Home') go(0); else if(e.key==='End') go(slides.length-1);
+  else if(e.key.toLowerCase()==='m') toggleMenu(); else if(e.key.toLowerCase()==='f') fs();
+});
+let tx=0,ty=0;
+$('#deck').addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+$('#deck').addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty; if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.5){ if(e.target.closest('.roster,.chapters,.tabs,#mapSvg')) return; dx>0?next():prev() }},{passive:true});
+
+function toggleMenu(f){const m=$('#menu'); const on=f??!m.classList.contains('on'); m.classList.toggle('on',on); sfx.click()}
+$('#menuBtn').onclick=()=>toggleMenu(); $('#menuClose').onclick=()=>toggleMenu(false);
+function fs(){ if(!document.fullscreenElement){document.documentElement.requestFullscreen?.()} else document.exitFullscreen?.() }
+$('#fsBtn').onclick=fs;
+$('#sndBtn').onclick=()=>{muted=!muted; $('#sndWave').style.opacity=muted?0:1; toast(muted?'الصوت مكتوم 🔇':'الصوت يعمل 🔊'); if(!muted) sfx.click()};
+function toast(t){const el=$('#toast'); el.textContent=t; el.classList.add('on'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('on'),1600)}
+
+/* global click sparks + parallax */
+document.addEventListener('pointerdown',e=>{ if(fxE&&entered) fxE.burst(e.clientX,e.clientY,14) });
+document.addEventListener('mousemove',e=>{ const r=document.documentElement; r.style.setProperty('--mx',(e.clientX/innerWidth-.5).toFixed(3)); r.style.setProperty('--my',(e.clientY/innerHeight-.5).toFixed(3)) });
+
+/* ================= INITS ================= */
+const inits={};
+
+/* counters */
+inits.counters=s=>{ s.querySelectorAll('.count-up').forEach(el=>{ const to=+el.dataset.to, start=to>1000?1990:0; const t0=performance.now(), dur=1400;
+  (function step(t){const p=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-p,3); el.textContent=Math.round(start+(to-start)*e); if(p<1) requestAnimationFrame(step)})(t0) }) };
+
+/* story */
+const chapters=[
+  {t:'الطائرة',x:'طائرة شحن تحلّق فوق المحيط. في داخلها خمسون شخصًا لا يعرف أحدهم الآخر، ولا يحمل أيٌّ منهم سلاحًا. الجميع يفكّر في الشيء نفسه: من سيبقى واقفًا في النهاية؟ يُفتح الباب الخلفي، ويندفع الهواء البارد إلى الداخل... حان وقت القرار.'},
+  {t:'الهبوط',x:'تقفز، وتفتح المظلّة، وتختار مكان هبوطك بعناية. مدينة مزدحمة مليئة بالغنائم والخطر؟ أم بيت بعيد هادئ؟ الثواني الأولى على الأرض تحدّد كل شيء: سلاح، درع، خوذة، وحقيبة. ومن يتأخّر يجد غيره قد سبقه.'},
+  {t:'الدائرة',x:'فجأة تظهر على الخريطة دائرة بيضاء. خارجها منطقة خطرة تسحب من صحّتك ببطء، والدائرة تضيق كل دقيقة. الكل مجبر على الاقتراب. هنا تبدأ المعركة الحقيقية: كمائن، وجدران غلو تُبنى في ثانية، وصناديق إمداد تهبط من السماء ويتقاتل عليها الجميع.'},
+  {t:'بوياه!',x:'يبقى فريقان... ثم فريق واحد... ثم أنت. تقفز على الشاشة الكلمة التي ينتظرها كل لاعب: BOOYAH! لا جائزة مالية ولا ميدالية حقيقية، فقط ذلك الشعور الذي يجعلك تضغط فورًا على زر «العب مرة أخرى».'}
+];
+let typer=null, chIdx=0;
+function typeCh(i){ chIdx=i; clearInterval(typer); const el=$('#chText'); el.classList.remove('done'); el.textContent=''; $('#chTitle').textContent=chapters[i].t;
+  $$('.chap').forEach((c,k)=>c.classList.toggle('on',k===i)); const txt=chapters[i].x; let k=0;
+  typer=setInterval(()=>{ k+=2; el.textContent=txt.slice(0,k); if(k%6===0) sfx.tick(); if(k>=txt.length){clearInterval(typer);el.classList.add('done')} },28) }
+$$('.chap').forEach(c=>c.onclick=()=>{sfx.click();typeCh(+c.dataset.ch)});
+$('#chSkip').onclick=()=>{clearInterval(typer); $('#chText').textContent=chapters[chIdx].x; $('#chText').classList.add('done')};
+inits.story=()=>typeCh(chIdx);
+
+/* match simulator */
+const phases=[
+  {i:'✈️',l:'الطائرة',t:'00:00',h:'على متن الطائرة',p:'الطائرة تعبر فوق الجزيرة في خط مستقيم. قبل القفز يرى اللاعبون على الخريطة أماكن آلات البيع ونقاط الإحياء، فيقرّرون أين سينزلون.',tip:'نصيحة: انزل بعيدًا قليلًا عن خط الطائرة، فالزحام هناك يكون أكبر.',alive:50,r:260,c:[200,150],plane:1},
+  {i:'🪂',l:'الهبوط',t:'00:40',h:'القفز والهبوط',p:'الجميع يقفز بالمظلات. من ينزل أولًا يلتقط أول سلاح، لذلك يحاول اللاعبون الهبوط بسرعة على أسطح البيوت.',tip:'وجّه مظلّتك للأسفل لتنزل أسرع من غيرك.',alive:50,r:260,c:[200,150],plane:2},
+  {i:'🎒',l:'الغنائم',t:'01:30',h:'جمع الغنائم',p:'سباق على الأسلحة والدروع والخوذ وحقائب الإسعاف وعملات FF. ومن هنا تبدأ أول المواجهات.',tip:'لا تترك بيتًا قبل أن تأخذ درعًا، ولو كان من مستوى منخفض.',alive:44,r:175,c:[205,152]},
+  {i:'📦',l:'أول إمداد',t:'02:40',h:'صناديق الإمداد تهبط',p:'بعد حوالي 160 ثانية تبدأ صناديق الإمداد بالسقوط، وعددها 4 في الجولة. كل صندوق فيه أسلحة وأغراض نادرة، وشعاع ضوئي يدلّ عليه... ويدلّ عليه الجميع أيضًا!',tip:'الصندوق مغرٍ، لكن تأكّد أن لا أحد ينتظرك عنده.',alive:36,r:145,c:[212,148],drops:1},
+  {i:'⭕',l:'تضيّق الدائرة',t:'04:30',h:'الدائرة تضيق',p:'المنطقة الآمنة تصغر، ومن يبقى خارجها يخسر من صحّته باستمرار. اللاعبون يُدفعون نحو المركز، والاشتباكات تزيد.',tip:'تحرّك نحو الدائرة مبكرًا ولا تنتظر آخر لحظة.',alive:27,r:108,c:[222,145]},
+  {i:'💠',l:'الإمداد الخارق',t:'06:50',h:'إمداد الدفاع والإمداد الخارق',p:'بعد حوالي 410 ثانية يهبط صندوقا دفاع فيهما ما يكفي فريقًا كاملًا، ومعهما إمداد خارق واحد فقط في الجولة: من يأخذه يحصل على درع من المستوى الخامس ويُحيي زملاءه.',tip:'هذه أقوى لحظة لقلب الجولة إذا كان فريقك متأخّرًا.',alive:16,r:78,c:[228,142],drops:2},
+  {i:'🔥',l:'الدائرة الأخيرة',t:'09:00',h:'الدائرة الأخيرة',p:'مساحة صغيرة جدًا، وبضعة لاعبين فقط. كل صوت خطوة مهم، وجدار الغلو يصبح أهم من أي سلاح.',tip:'ابنِ جدار الغلو قبل أن تطلق النار، لا بعدها.',alive:5,r:36,c:[232,140]},
+  {i:'🏆',l:'بوياه',t:'10:00',h:'BOOYAH!',p:'آخر لاعب أو فريق يبقى على قيد الحياة يفوز بالجولة، وتظهر كلمة BOOYAH على الشاشة.',tip:'مبروك! والآن... جولة ثانية؟ 😄',alive:1,r:14,c:[234,140]}
+];
+let ph=0, autoT=null, dotsMade=false, zoneNow={r:260,cx:200,cy:150};
+const tline=$('#tline');
+phases.forEach((p,i)=>{const b=document.createElement('button'); b.className='tl'; b.innerHTML=`<span>${p.i}</span>${p.l}`; b.onclick=()=>{stopAuto();setPhase(i)}; tline.appendChild(b)});
+function makeDots(){ const g=$('#dotsG'); g.innerHTML=''; const NS='http://www.w3.org/2000/svg';
+  for(let i=0;i<50;i++){ const a=Math.random()*Math.PI*2, rr=Math.sqrt(Math.random()); const x=205+Math.cos(a)*rr*125, y=155+Math.sin(a)*rr*80;
+    const c=document.createElementNS(NS,'circle'); c.setAttribute('cx',x.toFixed(1)); c.setAttribute('cy',y.toFixed(1)); c.setAttribute('r',3); c.setAttribute('fill','#ff5a5a'); c.style.transition='opacity .6s, r .6s'; c.dataset.x=x; c.dataset.y=y; g.appendChild(c) }
+  const me=g.children[0]; me.setAttribute('cx',236); me.setAttribute('cy',140); me.dataset.x=236; me.dataset.y=140; me.setAttribute('fill','#ffd400'); me.setAttribute('r',4.5); me.id='meDot'; dotsMade=true }
+function tweenZone(r,cx,cy){ const from={...zoneNow}, t0=performance.now(), dur=900;
+  (function st(t){const p=Math.min(1,(t-t0)/dur), e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2; const R=from.r+(r-from.r)*e, X=from.cx+(cx-from.cx)*e, Y=from.cy+(cy-from.cy)*e;
+    ['#zHole','#zRing'].forEach(s=>{const el=$(s); el.setAttribute('r',R); el.setAttribute('cx',X); el.setAttribute('cy',Y)}); zoneNow={r:R,cx:X,cy:Y}; if(p<1) requestAnimationFrame(st)})(t0) }
+function planeTo(p){ const pl=$('#plane'); const x=10+380*p, y=30+240*p; pl.style.transition='transform 1.2s ease-in-out'; pl.setAttribute('transform',`translate(${x},${y})`) }
+function drops(level){ const g=$('#dropsG'); g.innerHTML=''; const NS='http://www.w3.org/2000/svg'; const pts=[];
+  if(level>=1) pts.push([130,120,'#5ad1ff'],[290,110,'#5ad1ff'],[170,215,'#5ad1ff'],[260,200,'#5ad1ff']);
+  if(level>=2) pts.push([210,130,'#ffd400'],[250,160,'#ffd400'],[228,150,'#ff2d3a']);
+  pts.forEach(([x,y,c],i)=>{ const gg=document.createElementNS(NS,'g'); gg.innerHTML=`<line x1="${x}" y1="${y}" x2="${x}" y2="${y-40}" stroke="${c}" stroke-width="3" opacity=".6"><animate attributeName="opacity" values=".2;.8;.2" dur="1.4s" repeatCount="indefinite"/></line><rect x="${x-5}" y="${y-5}" width="10" height="10" fill="${c}" stroke="#fff" stroke-width="1.2"/>`; gg.style.opacity=0; gg.style.transition='opacity .5s'; g.appendChild(gg); setTimeout(()=>gg.style.opacity=1,80*i) }) }
+function setPhase(i){ ph=i; const p=phases[i]; if(!dotsMade) makeDots();
+  $('#phTime').textContent=p.t; $('#clockT').textContent=p.t; $('#phTitle').textContent=p.h; $('#phText').textContent=p.p; $('#phTip').textContent=p.tip;
+  $$('.tl').forEach((b,k)=>{b.classList.toggle('on',k===i);b.classList.toggle('done',k<i)});
+  tweenZone(p.r,p.c[0],p.c[1]);
+  planeTo(p.plane===1?.25:p.plane===2?.6:1); $('#plane').style.opacity=i>1?0:1; $('#flight').style.opacity=i>1?.15:.7;
+  drops(p.drops?p.drops:(i>3&&i<5?1:i>=5&&i<6?2:0));
+  // eliminate dots furthest from zone center
+  const ds=[...$('#dotsG').children].filter(d=>d.id!=='meDot').sort((a,b)=>Math.hypot(b.dataset.x-p.c[0],b.dataset.y-p.c[1])-Math.hypot(a.dataset.x-p.c[0],a.dataset.y-p.c[1]));
+  const kill=49-(p.alive-1); ds.forEach((d,k)=>{d.style.opacity=k<kill?.08:1});
+  const an=$('#aliveN'), from=+an.textContent; animNum(an,from,p.alive);
+  $('#phNext').textContent=i===phases.length-1?'↻ أعد الجولة':'المرحلة التالية ◀';
+  if(i===phases.length-1){ sfx.booyah(); const r=$('#meDot').getBoundingClientRect(); fxE&&fxE.burst(r.left,r.top,60) } else sfx.click();
+}
+function animNum(el,a,b){const t0=performance.now();(function s(t){const p=Math.min(1,(t-t0)/700); el.textContent=Math.round(a+(b-a)*p); if(p<1)requestAnimationFrame(s)})(t0)}
+$('#phNext').onclick=()=>{stopAuto(); setPhase(ph===phases.length-1?0:ph+1)};
+$('#phAuto').onclick=()=>{ if(autoT){stopAuto();return} $('#phAuto').textContent='⏸ إيقاف'; setPhase(0); autoT=setInterval(()=>{ if(ph>=phases.length-1){stopAuto();return} setPhase(ph+1) },2600) };
+function stopAuto(){ clearInterval(autoT); autoT=null; const b=$('#phAuto'); if(b) b.textContent='▶ شغّل الجولة تلقائيًا' }
+inits.match=()=>{ if(!dotsMade){ makeDots(); } setPhase(0) };
+
+/* events flip cards */
+const events=[
+  {e:'📦',t:'صندوق الإمداد',s:'4 في كل جولة',b:'يبدأ بالسقوط بعد حوالي 160 ثانية من بداية الجولة. فيه أسلحة وأغراض أفضل من الموجودة على الأرض، ويظهر عليه شعاع ضوئي يراه الجميع.'},
+  {e:'🛡️',t:'إمداد الدفاع',s:'صندوقان معًا',b:'يهبطان في الوقت نفسه بعد حوالي 410 ثانية، وكمية الغنائم فيهما تكفي فريقًا كاملًا من أربعة لاعبين.'},
+  {e:'💠',t:'الإمداد الخارق',s:'واحد فقط!',b:'صندوق وحيد في الجولة. من يسيطر عليه يحصل على درع من المستوى الخامس، ويعيد زملاءه الذين خرجوا من الجولة.'},
+  {e:'⚰️',t:'نقاط الإحياء',s:'فرصة ثانية',b:'سيطر على نقطة الإحياء ليعود زملاؤك إلى المعركة. في OB55 صار الزملاء يخرجون من توابيت حجرية بدل النزول بالمظلّة.'},
+  {e:'🏧',t:'آلات البيع',s:'اشترِ بعملات FF',b:'تجمع عملات FF من الأرض والقتال، ثم تشتري بها من آلات البيع. مثلًا قناصة AWM بسعر 600 عملة، و3 مرات فقط في الجولة.'},
+  {e:'🌪️',t:'العاصفة المدمّرة',s:'حدث عشوائي',n:1,b:'قد تظهر عواصف مدمّرة على الخريطة أثناء الجولة. الحل الوحيد: ادخل أقرب بيت واحتمِ فيه حتى تمرّ.'},
+  {e:'☄️',t:'إمداد النيازك',s:'من 1 أكتوبر',n:1,b:'حدث عشوائي جديد: كل صناديق الإمداد العادية تسقط من السماء على شكل نيازك مشتعلة!'},
+  {e:'⚡',t:'موجة الأسلحة',s:'حدث عشوائي',b:'في بعض الجولات يتم تقوية نوع معيّن من الأسلحة، مثل زيادة دقّة الرشاشات الصغيرة أو اختراق البنادق الهجومية للدروع.'},
+  {e:'🦊',t:'الوحش ذو الذيول التسعة',s:'حدث التعاون',n:1,b:'قبل بداية الجولة قد يضرب الطائرة ويشعلها فيُجبر الجميع على القفز، أو يفجّر الأرض ويترك حفرة مليئة بالغنائم.'},
+  {e:'🧱',t:'جدار الغلو',s:'سلاح الدفاع الأشهر',b:'قنبلة تتحوّل في ثانية إلى جدار يحميك من الرصاص. هو أشهر شيء في Free Fire، ومن يتقنه يربح أغلب المواجهات.'}
+];
+$('#events').innerHTML=events.map((v,i)=>`<div class="flip" data-a style="--d:${i%5+1}"><div class="in"><div class="f">${v.n?'<span class="new">NEW</span>':''}<div class="em">${v.e}</div><b>${v.t}</b><small>${v.s}</small></div><div class="b"><b>${v.t}</b>${v.b}</div></div></div>`).join('');
+$$('.flip').forEach(f=>f.onclick=()=>{f.classList.toggle('on');sfx.flip()});
+
+/* characters */
+const chars=[
+  {id:'IGNIS',n:'إغنيس',ti:'اللهب الجامح · Untamed Flame',q:'«اصمت أمام لهيبي!»',bio:'شاب يملك قدرة إشعال الأشياء. يقضي وقته في محاربة الجريمة والدفاع عن مدينته، لكن قوّته تسبّب له المشاكل أحيانًا، فينتقده الناس ويصبح عنيدًا ومتمرّدًا... ومع ذلك لا يتخلّى عن أهل مدينته.',age:16,img:IMG+'202311/a393f95f57bdaa3d2031a052b6acef24.png',ai:IMG+'20252/eb85d68afce35d52f9c35de339504044.png',an:'سراب اللهب',at:'يطلق جدارًا من النار إلى الأمام يحرق الأعداء وجدران الغلو التي يلمسها، ويمكن تخزين أكثر من استخدام.',st:[9,5,6,4],fb:'🔥'},
+  {id:'RYDEN',n:'رايدن',ti:'العبقري المخترع',q:'«مخترع عبقري عمره 16 سنة»',bio:'تفكيره ومعلوماته تسبق أصدقاءه بمراحل. كان يعيش تحت حماية أخته سوزي، أمّا الآن فقد نزل بنفسه إلى ساحة المعركة، واختراعاته هي التي ستصنع مستقبله.',age:16,img:IMG+'20241/fb808bb7cfc4820384c7a52fee3201ea.png',ai:IMG+'20241/e986c2ed44be8155c7e541d2dd003b37.png',an:'فخ العنكبوت',at:'يرمي عنكبوتًا آليًا متفجّرًا باتجاه معيّن، فيبطئ الأعداء القريبين منه ويسبّب لهم نزيفًا.',st:[6,5,5,8],fb:'🕷️'},
+  {id:'RIN',n:'رين',ti:'نينجا اليشم · Jade Ninja',q:'«آل ياغامي لا يتردّدون أبدًا»',bio:'الأخت الصغرى لهاياتو، والابنة الثانية في عائلة ياغامي. نينجا هادئة وماهرة، تعمل من الظلّ لتحمي إرث عائلتها.',img:IMG+'20257/9aa96a782fab8633cbb57f9229e7a5e6.png',ai:IMG+'20257/fb5da810c0f077d40dedaf6e16f4e94a.png',an:'عاصفة الكوناي',at:'تستدعي سكّين كوناي كل 8 ثوانٍ (حتى 3 معًا). تنطلق تلقائيًا نحو الأعداء أو جدران الغلو، وضررها يزيد كلما بعدت المسافة.',st:[8,4,7,5],fb:'🗡️'},
+  {id:'MORSE',n:'مورس',ti:'الذي لا يُتعقَّب · The Untraceable',q:'«لا يوجد شيء لا أستطيع الوصول إليه»',bio:'هادئ وحرّ مثل الفأر، ولا يترك وراءه أي أثر. يتنقّل بين العالم الحقيقي والإنترنت، ولا يحرّكه إلا ما يهمّه هو.',img:IMG+'20261/87b0db20d90350d22979b03d8b65a567.png',ai:IMG+'20261/37aa34f22c92967e73286283d1947de7.png',an:'بايتات التخفّي',at:'يختفي حتى 13 ثانية، فيصعب على الأعداء البعيدين رؤيته ويحصل على سرعة إضافية ودرع مؤقّت، لكنه لا يستطيع إطلاق النار وهو مختفٍ.',st:[5,6,9,6],fb:'💻'},
+  {id:'RAY',n:'راي',ti:'الحارس · The Watchman',q:'«الشمس والقمر ليسا عدوّين، وما زلت أؤمن بذلك»',bio:'تعب من القتال الذي لا ينتهي، فترك العصابة التي كان فيها. ومنذ ذلك الوقت يتجوّل في زوايا المدن الخفية، ويحمي الضعفاء بقوّته.',img:IMG+'20264/1a2c81cd893f6ea43a527cb3b7b2f897.png',ai:IMG+'20264/4856a59147ebca3687b96d3807956f8f.png',an:'رابطة الكسوف',at:'يطلق قوّة الشمس فيضع علامة على أول عدو يصيبه. إذا نزلت صحّة العدو إلى 30 أو أقل يسقط فورًا، وإن سقط تعود القدرة جاهزة وتستعيد صحّتك.',st:[8,6,6,6],fb:'🌗'}
+];
+const statL=['هجوم','دفاع','حركة','دعم'];
+const roster=$('#roster');
+roster.innerHTML=chars.map((c,i)=>`<button class="rbtn" data-c="${i}"><img src="${c.img}" alt="" onerror="this.style.display='none'"><span>${c.n}</span></button>`).join('');
+let cIdx=0;
+function selChar(i,silent){ cIdx=i; const c=chars[i]; const img=$('#cImg'); $('#stage').classList.remove('nofx');
+  img.classList.add('swap'); setTimeout(()=>{ img.onload=()=>img.classList.remove('swap'); img.src=c.img; img.alt=c.n; setTimeout(()=>img.classList.remove('swap'),400) },180);
+  $('#cFb').textContent=c.fb; $('#bigName').textContent=c.id; $('#cTitle').textContent=c.ti; $('#cName').textContent=c.n; $('#cQuote').textContent=c.q; $('#cBio').textContent=c.bio;
+  $('#cAge').innerHTML=c.age?`<span class="age16">عمره 16 سنة... مثل عمرنا تمامًا!</span>`:'';
+  $('#cAico').classList.remove('nofx'); $('#cAimg').src=c.ai; $('#cAname').textContent='القدرة: '+c.an; $('#cAtext').textContent=c.at;
+  $('#cBars').innerHTML=c.st.map((v,k)=>`<div class="bar-row"><span>${statL[k]}</span><div class="tr"><i></i></div><em>${v}</em></div>`).join('');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>$$('#cBars i').forEach((el,k)=>el.style.width=c.st[k]*10+'%')));
+  $$('.rbtn').forEach((b,k)=>b.classList.toggle('on',k===i));
+  if(!silent){ sfx.whoosh(); const r=$('#stage').getBoundingClientRect(); fxE&&fxE.burst(r.left+r.width/2,r.bottom-60,40) } }
+$$('.rbtn').forEach(b=>b.onclick=()=>selChar(+b.dataset.c));
+inits.chars=()=>selChar(cIdx,true);
+
+/* modes tabs */
+$$('#modeTabs .tab').forEach(t=>t.onclick=()=>{ sfx.click(); $$('#modeTabs .tab').forEach(x=>x.classList.toggle('on',x===t)); $$('.mode').forEach((m,k)=>m.classList.toggle('on',k===+t.dataset.m)) });
+
+/* maps */
+const maps=[
+  {n:'برمودا',en:'BERMUDA',d:'الخريطة الأولى والأشهر. جزيرة استوائية فيها مدن ومطار ومصانع، ويعرفها كل لاعب عن ظهر قلب.',g:['#1e7a6e','#0b2b33'],ic:'🏝️'},
+  {n:'بورغاتوري',en:'PURGATORY',d:'خريطة واسعة تقسمها الأنهار والجسور، والسيارات فيها مهمّة جدًا للتنقّل بين أطرافها.',g:['#3f6b2a','#14200e'],ic:'🌉'},
+  {n:'كالاهاري',en:'KALAHARI',d:'صحراء مكشوفة بين الكثبان والأطلال. الاختباء صعب فيها، والقنّاص يملك أفضلية كبيرة.',g:['#b5761f','#3a1e06'],ic:'🏜️'},
+  {n:'ألباين',en:'ALPINE',d:'جبال وقرى بطابع أوروبي، ومرتفعات تمنح من يصل إليها رؤية واسعة للمعركة.',g:['#5f7ea0','#16202e'],ic:'🏔️'},
+  {n:'نيكستيرا',en:'NEXTERRA',d:'خريطة مستقبلية بتقنيات متطوّرة ومبانٍ حديثة، وكأنك تلعب في مدينة من المستقبل.',g:['#5a2ba0','#120a26'],ic:'🛸'},
+  {n:'سولارا',en:'SOLARA',d:'مدينة ميناء بساحل متعرّج، يربط أجزاءها نظام مسارات انزلاق يمتدّ في الخريطة كلها.',g:['#d0582a','#2a0e14'],ic:'🌅'}
+];
+const topo=`<svg viewBox="0 0 300 200" preserveAspectRatio="none"><g fill="none" stroke="#fff" stroke-width=".8"><path d="M20 160 C80 120 120 170 180 130 S260 90 290 120"/><path d="M10 120 C70 80 140 130 200 90 S270 50 295 70"/><path d="M30 70 C90 40 150 80 210 50 S280 20 300 30"/><circle cx="210" cy="120" r="30"/><circle cx="210" cy="120" r="18"/><circle cx="80" cy="90" r="22"/></g></svg>`;
+$('#maps').innerHTML=maps.map((m,i)=>`<div class="mapc" tabindex="0" data-a style="--d:${i+1}"><div class="art" style="background:radial-gradient(circle at 70% 30%,${m.g[0]},${m.g[1]})">${topo}<div style="position:absolute;top:16px;left:18px;font-size:54px;filter:drop-shadow(0 0 14px rgba(255,255,255,.3))">${m.ic}</div></div><div class="shine"></div><div class="lab"><span class="en">${m.en}</span><b>${m.n}</b><p>${m.d}</p></div></div>`).join('');
+$$('.mapc').forEach(c=>{ c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect(), x=(e.clientX-r.left)/r.width, y=(e.clientY-r.top)/r.height; c.style.transform=`perspective(700px) rotateY(${(x-.5)*14}deg) rotateX(${(.5-y)*10}deg)`; c.style.setProperty('--px',x*100+'%'); c.style.setProperty('--py',y*100+'%')});
+  c.addEventListener('mouseleave',()=>c.style.transform=''); c.addEventListener('click',()=>{c.classList.toggle('open');sfx.click()}); c.addEventListener('mouseenter',()=>sfx.hover()) });
+
+/* weapons */
+const weapons=[
+  {k:'SMG',n:'الرشاشات الصغيرة',e:'🔫',t:'سريعة وخفيفة، وأنت تتحرّك بها بسهولة حتى أثناء الإطلاق. ممتازة في المسافات القريبة، لكن ضررها يقلّ كلما ابتعد الهدف.',s:[5,3,9],g:['MP40','P90','UMP','MP5','Vector'],nw:['Skorp']},
+  {k:'SHOTGUN',n:'الشوزن',e:'💥',t:'أقوى ضربة في المسافات القريبة جدًا. طلقة واحدة دقيقة قد تُسقط الخصم، لكنها تحتاج تمركزًا ذكيًا وتصويبًا ثابتًا.',s:[10,2,6],g:['M1014','M1887','MAG-7','M590'],nw:[]},
+  {k:'AR',n:'البنادق الهجومية',e:'🎯',t:'الخيار المتوازن لمعظم المواقف، تعمل في المسافات المتوسطة والبعيدة. في OB55 زادت دقّتها لتصبح أقوى من بعيد.',s:[7,7,6],g:['M4A1','SCAR','GROZA','FAMAS','AUG','XM8'],nw:['M7']},
+  {k:'SNIPER',n:'القنّاصات',e:'🔭',t:'ضرر هائل وطلقة واحدة قد تنهي القتال من بعيد. ثمنها أنك تتحرّك أبطأ وتحتاج صبرًا ودقّة.',s:[10,10,3],g:['AWM','Kar98k','M82B','M24','VSK94'],nw:['Hawk']},
+  {k:'MARKSMAN',n:'بنادق الرماية الدقيقة',e:'🎖️',t:'دقيقة وتخترق الدروع، وطلقاتها أسرع من القنّاصة. مناسبة لمن يحب إسقاط الخصم بعدة طلقات متتالية.',s:[7,8,4],g:['SKS','SVD','M14','Woodpecker','AC80'],nw:[]},
+  {k:'LMG',n:'الرشاشات الثقيلة',e:'🧨',t:'مخزن ضخم وإطلاق متواصل لإجبار الخصم على البقاء خلف ساتره. الحركة بها بطيئة، والدقّة في أفضل حالاتها وأنت جاثٍ.',s:[8,6,2],g:['M249','M60','Kord'],nw:['RPK']}
+];
+const wL=['الضرر','المدى','الحركة'];
+$('#wTabs').innerHTML=weapons.map((w,i)=>`<button class="tab" data-w="${i}">${w.e} ${w.n}</button>`).join('');
+let wIdx=0;
+function selW(i,silent){ wIdx=i; const w=weapons[i]; $$('#wTabs .tab').forEach((t,k)=>t.classList.toggle('on',k===i));
+  $('#wEn').textContent=w.k; $('#wName').textContent=w.n; $('#wText').textContent=w.t; $('#wBig').textContent=w.k;
+  $('#wBars').innerHTML=w.s.map((v,k)=>`<div class="bar-row"><span>${wL[k]}</span><div class="tr"><i></i></div><em>${v}</em></div>`).join('');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>$$('#wBars i').forEach((el,k)=>el.style.width=w.s[k]*10+'%')));
+  $('#wGuns').innerHTML=w.nw.map(g=>`<span class="gun n">${g}</span>`).join('')+w.g.map(g=>`<span class="gun">${g}</span>`).join('');
+  if(!silent) sfx.click() }
+$$('#wTabs .tab').forEach(t=>t.onclick=()=>selW(+t.dataset.w));
+inits.weapons=()=>selW(wIdx,true);
+
+/* countdown */
+const target=new Date('2026-12-16T00:00:00+03:00').getTime();
+function cd(){ let s=Math.max(0,Math.floor((target-Date.now())/1000)); const d=Math.floor(s/86400); s%=86400; const h=Math.floor(s/3600); s%=3600; const m=Math.floor(s/60); s%=60;
+  $('#cdD').textContent=pad(d); $('#cdH').textContent=pad(h); $('#cdM').textContent=pad(m); $('#cdS').textContent=pad(s) }
+cd(); setInterval(cd,1000);
+
+/* quiz */
+const Q=[
+  {q:'كم لاعبًا يهبط على الجزيرة في جولة باتل رويال؟',o:['30','50','100','64'],a:1,f:'50 لاعبًا بالضبط، والفائز واحد فقط.'},
+  {q:'ما اسم الجدار الذي يُبنى في ثانية ليحميك من الرصاص؟',o:['جدار الجليد','الدرع الذهبي','جدار الغلو','الحاجز الناري'],a:2,f:'جدار الغلو Gloo Wall، أشهر شيء في اللعبة.'},
+  {q:'ماذا يعني أن تظهر لك كلمة BOOYAH؟',o:['خرجت من الجولة','فزت بالمركز الأول','انتهى وقتك','وجدت صندوق إمداد'],a:1,f:'BOOYAH = أنت آخر من بقي واقفًا!'},
+  {q:'ما اسم آخر إصدار للعبة (سبتمبر 2026)؟',o:['OB50','OB55','OB60','OB45'],a:1,f:'OB55، ومعه أسلحة M7 وSkorp وRPK وHawk.'},
+  {q:'ماذا تحصل عليه إذا أخذت «الإمداد الخارق»؟',o:['سيارة سريعة','درع مستوى 5 وإحياء الزملاء','جواهر مجانية','شخصية جديدة'],a:1,f:'درع من المستوى الخامس، ويعود زملاؤك إلى الجولة.'}
+];
+let qi=0, qs=[];
+function renderQ(){ const box=$('#quiz');
+  if(qi>=Q.length){ const sc=qs.filter(Boolean).length; const win=sc===Q.length;
+    box.innerHTML=`<div class="qend">${win?'<div class="big latin">BOOYAH!</div>':''}<div class="qt">نتيجتك: ${sc} من ${Q.length}</div><p class="lead" style="margin:0 auto">${win?'علامة كاملة! أنت جاهز للنزول على الجزيرة 🔥':sc>=3?'ممتاز! قريب جدًا من الـ BOOYAH.':'لا بأس، ارجع للشرائح السابقة وجرّب مرة ثانية 😉'}</p><div class="qscore">${qs.map(v=>`<i class="${v?'ok':'no'}"></i>`).join('')}</div><div style="margin-top:22px"><button class="btn-fire" id="qAgain">↻ العب مرة ثانية</button></div></div>`;
+    $('#qAgain').onclick=()=>{qi=0;qs=[];renderQ();sfx.click()};
+    if(win){ sfx.booyah(); const r=box.getBoundingClientRect(); for(let k=0;k<4;k++) setTimeout(()=>fxE&&fxE.burst(r.left+Math.random()*r.width,r.top+Math.random()*r.height*.6,50),k*220) } return }
+  const c=Q[qi];
+  box.innerHTML=`<div class="qn">QUESTION ${qi+1} / ${Q.length}</div><div class="qt">${c.q}</div><div class="opts">${c.o.map((o,k)=>`<button class="opt" data-k="${k}">${o}</button>`).join('')}</div><div class="qfb" id="qfb">&nbsp;</div><div class="qscore">${Q.map((_,k)=>`<i class="${k<qs.length?(qs[k]?'ok':'no'):''}"></i>`).join('')}</div>`;
+  $$('.opt').forEach(b=>b.onclick=()=>{ if(box.dataset.lock==='1') return; box.dataset.lock='1'; const k=+b.dataset.k, ok=k===c.a; qs.push(ok);
+    b.classList.add(ok?'ok':'no'); if(!ok) $$('.opt')[c.a].classList.add('ok'); $('#qfb').textContent=(ok?'✔ صحيح! ':'✘ للأسف. ')+c.f; ok?sfx.ok():sfx.no();
+    if(ok){const r=b.getBoundingClientRect(); fxE&&fxE.burst(r.left+r.width/2,r.top+r.height/2,30)}
+    setTimeout(()=>{box.dataset.lock='0';qi++;renderQ()},1700) });
+}
+inits.quiz=()=>{ if(qi===0&&qs.length===0) renderQ() };
+
+/* final */
+const bw='BOOYAH!'; $('#booyah').innerHTML=[...bw].map((ch,i)=>`<span style="--i:${i}">${ch}</span>`).join('');
+inits.final=()=>{ setTimeout(()=>{ sfx.booyah(); for(let k=0;k<6;k++) setTimeout(()=>fxE&&fxE.burst(innerWidth*(.15+Math.random()*.7),innerHeight*(.2+Math.random()*.4),60),k*250) },700) };
+
+/* hover sounds */
+document.addEventListener('mouseover',e=>{ const t=e.target.closest('.btn-fire,.btn-ghost,.tab,.chap,.rbtn,.opt,.nav-btn,.flip,.mitem'); if(t&&t!==document._lastH){document._lastH=t; if(entered) sfx.hover()} if(!t) document._lastH=null });
+})();
+</script>
+</body>
+</html>
